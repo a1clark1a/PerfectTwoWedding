@@ -1,6 +1,6 @@
 import React from "react";
 
-const HomePage = () => {
+const HomePage = (): React.JSX.Element => {
   return (
     <section>
       <div>
