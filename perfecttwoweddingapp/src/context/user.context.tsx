@@ -7,13 +7,15 @@ import {
   onAuthStateChangedListener,
 } from "../firebase/utils";
 
+import { User } from "../types";
+
 export const UserContext = createContext({
-  currentUser: null,
-  setCurrentUser: (user) => null,
+  currentUser: null as User | null,
+  setCurrentUser: (user: User | null) => {},
 });
 
-export const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [inviteCode, setInviteCode] = useState("");
 
   const value = { currentUser, setCurrentUser };
@@ -25,6 +27,7 @@ export const UserProvider = ({ children }) => {
       setInviteCode(storedCode);
     }
 
+    // listen for auth state changes
     const unsubscribe = onAuthStateChangedListener(async (user) => {
       if (user) {
         // create user after redirect
@@ -33,6 +36,7 @@ export const UserProvider = ({ children }) => {
         if (docRef) {
           // get user information
           const newUser = await getUser(docRef.id);
+          console.log("newUser", newUser);
           if (newUser) {
             setCurrentUser(newUser);
             navigate("/home");

@@ -1,16 +1,26 @@
-import { getRedirectResult } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  auth,
+  createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
   signInWithGoogleRedirect,
+  signInAuthUserWithEmailAndPassword,
   verifyInviteCode,
 } from "../../firebase/utils";
+import { VerifiedCode } from "../../types";
+import FormInput from "../../components/FormInput/index.component";
+
+const defaultFormFields = {
+  email: "",
+  password: "",
+  displayName: "",
+};
 
 const LandingRoute = (): React.JSX.Element => {
   const [inviteCode, setInviteCode] = useState("");
-  const [isVerified, setIsVerified] = useState(false);
-  const [verifiedUser, setVerifiedUser] = useState<any>(null);
+  const [verifiedCode, setVerifiedCode] = useState<VerifiedCode[] | null>(null);
+  const [isSigningUp, setIsSigningUp] = useState(true);
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { email, password, displayName } = formFields;
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newCode = e.target.value;
@@ -18,29 +28,137 @@ const LandingRoute = (): React.JSX.Element => {
     sessionStorage.setItem("inviteCode", newCode);
   };
 
-  const handleInviteCode = async () => {
-    setVerifiedUser(await verifyInviteCode(inviteCode));
-    if (verifiedUser) {
-      setIsVerified(true);
-    }
+  const handleInviteCode = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    verifyInviteCode(inviteCode).then((res) => {
+      setVerifiedCode(res);
+    });
   };
 
   const googleSignin = async () => {
     await signInWithGoogleRedirect(inviteCode);
   };
 
+  const showDisplayName = () => {
+    let name = "";
+    if (verifiedCode) {
+      name = verifiedCode.map((code) => code.name).join(" & ");
+    }
+    return name;
+  };
+
+  const resetFormFields = () => {
+    setFormFields(defaultFormFields);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormFields({
+      ...formFields,
+      [name]: value,
+    });
+  };
+
+  const handleSignInToggle = () => {
+    setIsSigningUp(!isSigningUp);
+  };
+
+  const handleSignUpSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const userCred = await createAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+
+      if (!userCred) throw new Error("User not created");
+      await createUserDocumentFromAuth(
+        {
+          ...userCred.user,
+          displayName,
+        },
+        inviteCode
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    resetFormFields();
+  };
+
+  const handleSignInSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await signInAuthUserWithEmailAndPassword(email, password);
+    } catch (error: any) {
+      switch (error.code) {
+        case "auth/invalid-login-credentials":
+          alert("Incorrect password");
+          break;
+        case "auth/user-not-found":
+          alert("No User associated with this email");
+          break;
+        default:
+          alert(`Error logging in: ${error.message}`);
+          break;
+      }
+    }
+  };
+
   return (
     <section>
-      {!isVerified ? (
-        <>
+      {!verifiedCode?.length ? (
+        <form onSubmit={handleInviteCode}>
           <h3>Welcome!</h3>
           <h2>To Sara and Clark's Wedding</h2>
           <input type="text" value={inviteCode} onChange={handleInput} />
-          <button onClick={handleInviteCode}>Enter</button>
-        </>
+          <button type="submit">Enter</button>
+        </form>
       ) : (
         <>
-          <h2>Hi </h2>
+          <h2>Hi {showDisplayName()}</h2>
+          <form
+            onSubmit={isSigningUp ? handleSignUpSubmit : handleSignInSubmit}
+          >
+            {isSigningUp && (
+              <FormInput
+                label="Name"
+                inputOptions={{
+                  type: "text",
+                  onChange: handleChange,
+                  name: "displayName",
+                  value: displayName,
+                  required: true,
+                }}
+              />
+            )}
+            <FormInput
+              label="Email"
+              inputOptions={{
+                type: "email",
+                onChange: handleChange,
+                name: "email",
+                value: email,
+                required: true,
+              }}
+            />
+
+            <FormInput
+              label="Password"
+              inputOptions={{
+                type: "password",
+                onChange: handleChange,
+                name: "password",
+                value: password,
+                required: true,
+              }}
+            />
+            <button onClick={handleSignInToggle}>
+              Already have an account? Sign in
+            </button>
+            <button type="submit">{isSigningUp ? "Sign Up" : "Sign In"}</button>
+          </form>
           <button onClick={googleSignin}>Sign in</button>
         </>
       )}
