@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -6,8 +8,10 @@ import {
   signInAuthUserWithEmailAndPassword,
   verifyInviteCode,
 } from "../../firebase/utils";
-import { VerifiedCode } from "../../types";
+
 import FormInput from "../../components/FormInput/index.component";
+
+import { VerifiedCode } from "../../types";
 
 const defaultFormFields = {
   email: "",
@@ -21,6 +25,7 @@ const LandingRoute = (): React.JSX.Element => {
   const [isSigningUp, setIsSigningUp] = useState(true);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password, displayName } = formFields;
+  const navigate = useNavigate();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newCode = e.target.value;
@@ -80,6 +85,7 @@ const LandingRoute = (): React.JSX.Element => {
         },
         inviteCode
       );
+      navigate("/home");
     } catch (error) {
       console.log(error);
     }

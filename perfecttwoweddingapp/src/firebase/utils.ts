@@ -131,6 +131,7 @@ export const createUserDocumentFromAuth = async (
         user.alreadyUsed = true;
       });
 
+      // update guestList DB to set alreadyUsed to true
       await updateGuestListInviteCode(inviteCode);
 
       const { displayName, email } = userAuth;
@@ -143,6 +144,8 @@ export const createUserDocumentFromAuth = async (
         createdAt,
         verifiedCode: verifiedCode,
       };
+
+      // update user collection with new user
       await setDoc(userDocRef, newUser);
     } catch (error) {
       console.error("Error creating the user:", error);
