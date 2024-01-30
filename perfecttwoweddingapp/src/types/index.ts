@@ -17,5 +17,5 @@ export interface VerifiedCode {
 
 export interface Kids {
   allowKids: boolean;
-  kids: string[];
+  kidsNames: string[];
 }
