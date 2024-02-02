@@ -202,6 +202,7 @@ export const getUser = async (id: string) => {
 // signout
 export const signOutUser = async () => await signOut(auth);
 
+// Listen to changes to the Auth state
 export const onAuthStateChangedListener = (
   callback: NextOrObserver<FirebaseUser>
 ) => onAuthStateChanged(auth, callback);
