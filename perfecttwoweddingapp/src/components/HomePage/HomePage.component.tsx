@@ -23,7 +23,7 @@ const HomePage = (): React.JSX.Element => {
       <Popup
         trigger={(open) => <button>RSVP</button>}
         position="right center"
-        closeOnDocumentClick
+        closeOnDocumentClick={true}
       >
         <RSVP />
       </Popup>

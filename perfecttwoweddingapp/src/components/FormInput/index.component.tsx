@@ -10,13 +10,13 @@ const FormInput = ({
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     name: string;
     value: string;
-    required: boolean;
+    required?: boolean;
   };
 }): React.JSX.Element => {
   return (
     <div className="form-group">
-      <input className="form-input" {...inputOptions} />
       {label && <label className={`form-input-label`}>{label}</label>}
+      <input className="form-input" {...inputOptions} />
     </div>
   );
 };
