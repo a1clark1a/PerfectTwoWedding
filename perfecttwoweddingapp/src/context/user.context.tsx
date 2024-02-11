@@ -12,13 +12,17 @@ import { User } from "../types";
 export const UserContext = createContext({
   currentUser: null as User | null,
   setCurrentUser: (user: User | null) => {},
+  updateUserInviteAcceptance: (
+    currentUser: User | null,
+    confirmedName: string,
+    accepted: boolean
+  ) => {},
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [inviteCode, setInviteCode] = useState("");
 
-  const value = { currentUser, setCurrentUser };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,5 +54,25 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     return unsubscribe;
   }, [inviteCode, navigate]);
 
+  const updateUserInviteAcceptance = (
+    currentUser: User | null,
+    confirmedName: string,
+    accepted: boolean
+  ) => {
+    if (!currentUser) return null;
+    const currentUserToUpdate = currentUser;
+
+    const updatedVerifiedCode = currentUserToUpdate.verifiedCode.map(
+      (invite) => {
+        if (invite.name === confirmedName) {
+          invite.accepted = accepted;
+        }
+        return invite;
+      }
+    );
+    currentUserToUpdate.verifiedCode = updatedVerifiedCode;
+    setCurrentUser(currentUserToUpdate);
+  };
+  const value = { currentUser, setCurrentUser, updateUserInviteAcceptance };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

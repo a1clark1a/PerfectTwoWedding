@@ -7,13 +7,19 @@ export interface User {
   verifiedCode: VerifiedCode[];
 }
 
-export interface VerifiedCode {
+export type VerifiedCode = {
   alreadyUsed: boolean;
   inviteCode: string;
   kids: Kids;
   name: string;
-  plusOne: boolean;
-}
+  plusOne: plusOne;
+  accepted: boolean;
+};
+
+export type plusOne = {
+  allow: boolean;
+  name: string;
+};
 
 export interface Kids {
   allowKids: boolean;

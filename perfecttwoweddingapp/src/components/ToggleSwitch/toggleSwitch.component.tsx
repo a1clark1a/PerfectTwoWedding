@@ -5,18 +5,21 @@ const ToggleSwitch = ({
   name,
   checked,
   onChange,
-  optionLabels,
+  optionLabels = {
+    true: "Yes",
+    false: "No",
+  },
   disabled,
 }: {
   id: string;
   name: string;
   checked: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  optionLabels: {
+  optionLabels?: {
     true: string;
     false: string;
   };
-  disabled: boolean;
+  disabled?: boolean;
 }): React.JSX.Element => {
   return (
     <div className={"toggle-switch"}>
@@ -26,7 +29,7 @@ const ToggleSwitch = ({
         className="toggle-switch-checkbox"
         id={id}
         checked={checked}
-        onChange={onChange}
+        onChange={(e) => onChange(e)}
         disabled={disabled}
       />
       {id && optionLabels && (
