@@ -139,6 +139,7 @@ export const createUserDocumentFromAuth = async (
 
       // create new user
       newUser = {
+        id: userAuth.uid,
         displayName,
         email,
         createdAt,
@@ -206,3 +207,59 @@ export const signOutUser = async () => await signOut(auth);
 export const onAuthStateChangedListener = (
   callback: NextOrObserver<FirebaseUser>
 ) => onAuthStateChanged(auth, callback);
+
+export const submitRSVPToFirebase = async (
+  user: User | null,
+  newConfirmed: string[],
+  newDenied: string[]
+) => {
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      if (user == null) throw new Error("No User Detected");
+      const rsvpDocRef = await doc(db, "rsvp", "rsvp"); //db collection docId
+      const rsvpSnapshot = await getDoc(rsvpDocRef);
+
+      let newDoc = {
+        confirmed: newConfirmed,
+        denied: newDenied,
+      };
+      // if no doc
+      if (!rsvpSnapshot.exists()) {
+        await setDoc(rsvpDocRef, newDoc);
+
+        const userDocRef = doc(db, "users", user.id); //db collection docId
+        await setDoc(userDocRef, user);
+        resolve();
+      }
+
+      const rsvpDoc = rsvpSnapshot.data();
+      newDoc = {
+        confirmed: [...rsvpDoc?.confirmed, ...newConfirmed],
+        denied: [...rsvpDoc?.denied, ...newDenied],
+      };
+
+      await setDoc(rsvpDocRef, newDoc);
+      // update user verified code
+
+      const userDocRef = await doc(db, "users", user.id); //db collection docId
+      await setDoc(userDocRef, user);
+      resolve();
+    } catch (error) {
+      reject(new Error(`Failed to submit RSVP: ${error}`));
+    }
+  });
+};
+
+export const debounce = <T extends (...args: any[]) => void>(
+  func: T,
+  delay: number
+) => {
+  let timeoutId: ReturnType<typeof setTimeout>;
+
+  return (...args: any[]) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+};
