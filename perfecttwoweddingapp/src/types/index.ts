@@ -5,12 +5,18 @@ export interface User {
   email: string;
   createdAt: Date;
   verifiedCode: VerifiedCode[];
+  id: string;
+  submit?: {
+    submittedOn: Date;
+    submitted: boolean;
+  };
+  message?: string;
 }
 
 export type VerifiedCode = {
   alreadyUsed: boolean;
   inviteCode: string;
-  kids: Kids;
+  kids: type;
   name: string;
   plusOne: plusOne;
   accepted: boolean;
@@ -19,9 +25,15 @@ export type VerifiedCode = {
 export type plusOne = {
   allow: boolean;
   name: string;
+  accepted: boolean;
 };
 
-export interface Kids {
+export interface type {
   allowKids: boolean;
-  kidsNames: string[];
+  kidsNames: Kid[];
 }
+
+export type Kid = {
+  name: string;
+  accepted: boolean;
+};
