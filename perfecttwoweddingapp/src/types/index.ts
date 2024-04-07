@@ -14,21 +14,30 @@ export interface User {
 }
 
 export type VerifiedCode = {
-  alreadyUsed: boolean;
   inviteCode: string;
-  kids: type;
+  kids: Kids;
+  invitedNames: InvitedNames[];
+  plusOne: PlusOne;
+  accepted: boolean;
+  submit?: {
+    submittedOn: Date;
+    submitted: boolean;
+  };
+  message?: string;
+};
+
+export type InvitedNames = {
   name: string;
-  plusOne: plusOne;
   accepted: boolean;
 };
 
-export type plusOne = {
+export type PlusOne = {
   allow: boolean;
   name: string;
   accepted: boolean;
 };
 
-export interface type {
+export interface Kids {
   allowKids: boolean;
   kidsNames: Kid[];
 }

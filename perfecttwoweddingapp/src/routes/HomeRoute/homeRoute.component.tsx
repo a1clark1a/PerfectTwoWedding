@@ -1,11 +1,13 @@
 import { Fragment } from "react";
+import ScrollToTop from "react-scroll-to-top";
 
 // components
 import HomePage from "../../components/HomePage/HomePage.component";
 import MemoryLane from "../../components/MemoryLane/MemoryLane.component";
 import FAQ from "../../components/FAQ/FAQ.component";
-import TravelGuide from "../../components/TravelGuide/travelGuide.component";
-import Details from "../../components/Details/details.component";
+import TravelGuide from "../../components/TravelGuide/TravelGuide.component";
+import Details from "../../components/Details/Details.component";
+import Footnote from "../../components/Footnote/Footnote.component";
 
 const HomeRoute = (): React.JSX.Element => {
   return (
@@ -15,6 +17,8 @@ const HomeRoute = (): React.JSX.Element => {
       <Details />
       <TravelGuide />
       <FAQ />
+      <Footnote />
+      <ScrollToTop smooth color="#1b1c1e" />
     </Fragment>
   );
 };

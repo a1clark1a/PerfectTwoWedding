@@ -1,43 +1,62 @@
 import React, { useContext, useState } from "react";
 import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
 
 import CountDownClock from "../CountDownClock/countDownClock.component";
 import RSVP from "../RSVP/rsvp.component";
+import InviteCodeForm from "../InviteCodeForm/InviteCodeForm.component";
 
-import { UserContext } from "../../context/user.context";
+import { VerifiedCodeContext } from "../../context/verifiedCode.context";
+
+import "reactjs-popup/dist/index.css";
+import "./HomePage.styles.scss";
+
+import mobileBackgroundImage1 from "../../images/SAR01109-02.jpg";
 
 const HomePage = (): React.JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
-  const { currentUser } = useContext(UserContext);
+  const { currentVerifiedCode } = useContext(VerifiedCodeContext);
 
-  const alreadyAccepted = currentUser && currentUser.submit?.submitted;
+  const alreadySubmitted =
+    currentVerifiedCode && currentVerifiedCode.submit?.submitted;
 
   const closeRSVPForm = (): void => {
     setOpenModal(false);
   };
-  return (
-    <section>
-      <div>
-        <h2>
-          <CountDownClock />
-        </h2>
-      </div>
-      <div>
-        <h1>Sara & Clark</h1>
-      </div>
-      <div>
-        <h2>Date</h2>
-      </div>
-      <button onClick={() => setOpenModal(true)}>RSVP</button>
 
+  console.log(currentVerifiedCode);
+  return (
+    <section
+      className="homePageSection"
+      style={{ backgroundImage: `url(${mobileBackgroundImage1})` }}
+    >
+      <div className="homePageContainer">
+        <div className="content">
+          <CountDownClock />
+        </div>
+        <div className="content">
+          <span className="homePageTitleName">Sara & Clark</span>
+        </div>
+        <div className="content">
+          <span className="homePageDate">
+            September 23, 2024 | Skyforest, CA
+          </span>
+        </div>
+        <div className="content rsvpButtonContainer">
+          <button className="rsvpButton" onClick={() => setOpenModal(true)}>
+            RSVP
+          </button>
+        </div>
+      </div>
       <Popup
         open={openModal}
         position="right center"
         closeOnDocumentClick
         onClose={closeRSVPForm}
+        className="rsvpPopup"
       >
-        {alreadyAccepted ? (
+        {!currentVerifiedCode ? (
+          <InviteCodeForm />
+        ) : alreadySubmitted ? (
           <div>
             You've already submitted your answer. If you wish to change it
             contact the Bride and Groom

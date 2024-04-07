@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
+import "./countDownClock.styles.scss";
+
 const CountDownClock = (): React.JSX.Element => {
   const targetDate = new Date("September 23, 2024 15:00:00").getTime();
 
@@ -13,11 +15,17 @@ const CountDownClock = (): React.JSX.Element => {
     );
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Add leading zero if the number is under 10
+    const formattedDays = days < 10 ? `0${days}` : days;
+    const formattedHours = hours < 10 ? `0${hours}` : hours;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
     return {
-      days,
-      hours,
-      minutes,
-      seconds,
+      days: formattedDays,
+      hours: formattedHours,
+      minutes: formattedMinutes,
+      seconds: formattedSeconds,
     };
   }, [targetDate]);
 
@@ -32,13 +40,31 @@ const CountDownClock = (): React.JSX.Element => {
   }, [calculateTimeRemaining]);
 
   return (
-    <div>
-      <h2>Clock</h2>
-      <div>
-        <div>{timeRemaining.days} days</div>
-        <div>{timeRemaining.hours} hours</div>
-        <div>{timeRemaining.minutes} minutes</div>
-        <div>{timeRemaining.seconds} seconds</div>
+    <div className="countdownClockContainer">
+      <div className="individualHandContainer">
+        <div className="clockNumber">{timeRemaining.days}</div>
+        <div className="clockName">Days</div>
+      </div>
+      <div className="individualHandContainer">
+        <div className="colon">:</div>
+      </div>
+      <div className="individualHandContainer">
+        <div className="clockNumber">{timeRemaining.hours}</div>
+        <div className="clockName">Hours</div>
+      </div>
+      <div className="individualHandContainer">
+        <div className="colon">:</div>
+      </div>
+      <div className="individualHandContainer">
+        <div className="clockNumber">{timeRemaining.minutes}</div>
+        <div className="clockName"> Min</div>
+      </div>
+      <div className="individualHandContainer">
+        <div className="colon">:</div>
+      </div>
+      <div className="individualHandContainer">
+        <div className="clockNumber">{timeRemaining.seconds}</div>
+        <div className="clockName"> Secs</div>
       </div>
     </div>
   );

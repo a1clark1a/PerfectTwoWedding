@@ -85,24 +85,20 @@ export const verifyInviteCode = async (inviteCode: string) => {
   const guestListsRef = await collection(db, "guestLists");
 
   // create query to get document that matches inviteCode
-  const q = query(guestListsRef, where("inviteCode", "==", inviteCode));
-
+  //const q = query(guestListsRef, where("inviteCode", "==", inviteCode));
+  const guestDocRef = await doc(guestListsRef, inviteCode);
   // get snapshot array of docs
-  const querySnapshot = await getDocs(q);
-
-  let verifiedGuests: VerifiedCode[] = [];
+  //const querySnapshot = await getDocs(q);
+  const docSnap = await getDoc(guestDocRef);
 
   // set verfiedGuest to readable object
-  querySnapshot.docs.forEach((docSnapshot) => {
-    const userData: VerifiedCode = docSnapshot.data() as VerifiedCode;
-    console.log(userData);
-    if (userData.inviteCode === inviteCode) {
-      verifiedGuests.push(userData);
-    }
-  });
+  //  querySnapshot.docs.forEach((docSnapshot) => {
+  //   verifiedGuest = docSnapshot.data() as VerifiedCode;
+  //   console.log(verifiedGuest);
+  //  }
 
-  if (verifiedGuests.length > 0) {
-    return verifiedGuests;
+  if (docSnap.exists()) {
+    return docSnap.data() as VerifiedCode;
   } else {
     throw new Error("Invite code not found");
   }
@@ -113,48 +109,48 @@ export const createUserDocumentFromAuth = async (
   userAuth: any,
   inviteCode: string
 ) => {
-  const userDocRef = await doc(db, "users", userAuth.uid);
-  const userSnapshot = await getDoc(userDocRef);
-  let newUser: User | null = null;
-  if (!userSnapshot.exists()) {
-    try {
-      // verify invite code
-      const verifiedCode = await verifyInviteCode(inviteCode);
+  //const userDocRef = await doc(db, "users", userAuth.uid);
+  // const userSnapshot = await getDoc(userDocRef);
+  // let newUser: User | null = null;
+  // if (!userSnapshot.exists()) {
+  //   try {
+  //     // verify invite code
+  //     const verifiedCode = await verifyInviteCode(inviteCode);
 
-      // no userSnapshot but if a verifiedUser exists, check if code is already used
-      if (verifiedCode.some((user: VerifiedCode) => user.alreadyUsed)) {
-        throw new Error("Invite code already used");
-      }
+  //     // no userSnapshot but if a verifiedUser exists, check if code is already used
+  //     if (verifiedCode.some((user: VerifiedCode) => user.alreadyUsed)) {
+  //       throw new Error("Invite code already used");
+  //     }
 
-      // set alreadyUsed to true
-      verifiedCode.forEach(async (user: VerifiedCode) => {
-        user.alreadyUsed = true;
-      });
+  //     // set alreadyUsed to true
+  //     verifiedCode.forEach(async (user: VerifiedCode) => {
+  //       user.alreadyUsed = true;
+  //     });
 
-      // update guestList DB to set alreadyUsed to true
-      await updateGuestListInviteCode(inviteCode);
+  //     // update guestList DB to set alreadyUsed to true
+  //     await updateGuestListInviteCode(inviteCode);
 
-      const { displayName, email } = userAuth;
-      const createdAt = new Date();
+  //     const { displayName, email } = userAuth;
+  //     const createdAt = new Date();
 
-      // create new user
-      newUser = {
-        id: userAuth.uid,
-        displayName,
-        email,
-        createdAt,
-        verifiedCode: verifiedCode,
-      };
+  //     // create new user
+  //     newUser = {
+  //       id: userAuth.uid,
+  //       displayName,
+  //       email,
+  //       createdAt,
+  //       verifiedCode: verifiedCode,
+  //     };
 
-      // update user collection with new user
-      await setDoc(userDocRef, newUser);
-    } catch (error) {
-      console.error("Error creating the user:", error);
-      return null;
-    }
-  }
+  //     // update user collection with new user
+  //     await setDoc(userDocRef, newUser);
+  //   } catch (error) {
+  //     console.error("Error creating the user:", error);
+  //     return null;
+  //   }
+  // }
 
-  return userDocRef;
+  return {} as any;
 };
 
 // create user with email and password
@@ -179,12 +175,12 @@ export const signInAuthUserWithEmailAndPassword = async (
 
 // google auth redirect with verification
 export const signInWithGoogleRedirect = async (inviteCode: string) => {
-  try {
-    const verifiedCode = await verifyInviteCode(inviteCode);
-    if (verifiedCode.length) await signInWithRedirect(auth, googleProvider);
-  } catch (error) {
-    console.error("Error signing in", error);
-  }
+  // try {
+  //   const verifiedCode = await verifyInviteCode(inviteCode);
+  //   if (verifiedCode.length) await signInWithRedirect(auth, googleProvider);
+  // } catch (error) {
+  //   console.error("Error signing in", error);
+  // }
 };
 
 // get user data
@@ -209,13 +205,13 @@ export const onAuthStateChangedListener = (
 ) => onAuthStateChanged(auth, callback);
 
 export const submitRSVPToFirebase = async (
-  user: User | null,
+  verifiedCode: VerifiedCode | null,
   newConfirmed: string[],
   newDenied: string[]
 ) => {
   return new Promise<void>(async (resolve, reject) => {
     try {
-      if (user == null) throw new Error("No User Detected");
+      if (verifiedCode == null) throw new Error("No Code Detected");
       const rsvpDocRef = await doc(db, "rsvp", "rsvp"); //db collection docId
       const rsvpSnapshot = await getDoc(rsvpDocRef);
 
@@ -225,10 +221,13 @@ export const submitRSVPToFirebase = async (
       };
       // if no doc
       if (!rsvpSnapshot.exists()) {
-        await setDoc(rsvpDocRef, newDoc);
+        await setDoc(rsvpDocRef, {
+          ...newDoc,
+          code: verifiedCode.inviteCode,
+        });
 
-        const userDocRef = doc(db, "users", user.id); //db collection docId
-        await setDoc(userDocRef, user);
+        const guestListsDocRef = doc(db, "guestLists", verifiedCode.inviteCode); //db collection docId
+        await setDoc(guestListsDocRef, verifiedCode);
         resolve();
       }
 
@@ -238,11 +237,18 @@ export const submitRSVPToFirebase = async (
         denied: [...rsvpDoc?.denied, ...newDenied],
       };
 
-      await setDoc(rsvpDocRef, newDoc);
+      await setDoc(rsvpDocRef, {
+        ...newDoc,
+        code: verifiedCode.inviteCode,
+      });
       // update user verified code
 
-      const userDocRef = await doc(db, "users", user.id); //db collection docId
-      await setDoc(userDocRef, user);
+      const guestListsDocRef = await doc(
+        db,
+        "guestLists",
+        verifiedCode.inviteCode
+      ); //db collection docId
+      await setDoc(guestListsDocRef, verifiedCode);
       resolve();
     } catch (error) {
       reject(new Error(`Failed to submit RSVP: ${error}`));

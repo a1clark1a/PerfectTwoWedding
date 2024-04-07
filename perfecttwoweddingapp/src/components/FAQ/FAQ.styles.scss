@@ -1,0 +1,55 @@
+.FAQSection {
+  min-height: 50vh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.FAQContainer {
+  background-color: #e9c8be;
+  padding: 20px;
+  border: #e9c8be;
+  min-width: 320px;
+  h2 {
+    font-size: 20px;
+    text-align: center;
+    font-weight: 400;
+    margin: 0;
+  }
+}
+
+.FAQListContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .FAQList {
+    // margin-left: 20px;
+    list-style-type: none;
+    padding: 0;
+  }
+}
+
+.itemTitle {
+  cursor: pointer;
+  color: black;
+  font-family: "nimbus-sans", sans-serif;
+  font-size: 15px;
+  margin: 10px;
+}
+
+.dropdownContent {
+  display: none;
+  background-color: #e9c8be;
+  padding: 10px;
+  transition: display 0.5s ease-in-out;
+  font-family: "nimbus-sans", sans-serif;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.dropdownContent.open {
+  display: block;
+}
