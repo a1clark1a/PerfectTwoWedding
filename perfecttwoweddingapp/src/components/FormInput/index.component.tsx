@@ -4,19 +4,24 @@ const FormInput = ({
   label,
   inputOptions,
 }: {
-  label: string;
+  label?: string;
   inputOptions: {
     type: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     name: string;
     value: string;
     required?: boolean;
+    placeholder?: string;
+    autoComplete?: string;
+    className?: string;
   };
 }): React.JSX.Element => {
   return (
     <div className="form-group">
-      {label && <label className={`form-input-label`}>{label}</label>}
-      <input className="form-input" {...inputOptions} />
+      {label && (
+        <label className={`${inputOptions.className}-label`}>{label}</label>
+      )}
+      <input {...inputOptions} />
     </div>
   );
 };
