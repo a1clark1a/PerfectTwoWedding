@@ -34,12 +34,15 @@ const Details = (): React.JSX.Element => {
             img={ceremonyImg}
             children={
               <div className="cardChildren">
-                <span>Date</span>
+                <div>Date</div>
                 <span>Monday, September 23, 2024</span>
                 <span>------------------------------</span>
-                <span>Ceremony & Reception</span>
+                <div>Ceremony & Reception</div>
                 <span>28950 Highway 18, Skyforest, CA 92385</span>
                 <span>Time: 3pm - 7pm</span>
+                <span>------------------------------</span>
+                <div>Attire</div>
+                <span>Formal | Cocktail</span>
               </div>
             }
           />
@@ -49,7 +52,7 @@ const Details = (): React.JSX.Element => {
             img={cocktailHourImg}
             children={
               <div className="cardChildren">
-                <span>Cocktail Hour will follow the ceremony.</span>
+                <div>Cocktail Hour will follow the ceremony</div>
                 <span>
                   Please enjoy beverages / alcohol, appetizers, and mini games
                 </span>
@@ -60,7 +63,12 @@ const Details = (): React.JSX.Element => {
           <Card
             label="Reception Hour"
             img={receptionHourImg}
-            children={<div className="cardChildren">Reception stuff</div>}
+            children={
+              <div className="cardChildren">
+                <div>Reception to follow cocktail hour</div>
+                <span>Reception ends at 8pm</span>
+              </div>
+            }
           />
         </div>
       )}
@@ -69,6 +77,7 @@ const Details = (): React.JSX.Element => {
         position="right center"
         closeOnDocumentClick
         onClose={closeForm}
+        className="rsvpPopup"
       >
         <InviteCodeForm closeForm={closeForm} />
       </Popup>

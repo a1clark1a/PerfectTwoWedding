@@ -41,3 +41,43 @@
   line-height: 24px;
   color: #1b1c1e;
 }
+
+.cardChildren {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 5px 25px 5px;
+  font-family: "nimbus-sans", sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  text-align: center;
+  div {
+    font-weight: 600;
+    padding: 15px 0px;
+  }
+}
+
+.cardPopup-content {
+  margin: auto;
+  background: rgb(255, 255, 255);
+  width: 85%;
+  min-height: 100px;
+  max-height: 400px;
+  padding: 5px;
+  overflow: scroll;
+}
+.cardPopup-arrow {
+  color: rgb(255, 255, 255);
+}
+[role="tooltip"].cardPopup-content {
+  width: 200px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+}
+
+.cardPopup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+[data-popup="tooltip"].cardPopup-overlay {
+  background: transparent;
+}
