@@ -35,6 +35,7 @@ const Card = ({
         position="right center"
         closeOnDocumentClick
         onClose={closeRSVPForm}
+        className="cardPopup"
       >
         {children}
       </Popup>

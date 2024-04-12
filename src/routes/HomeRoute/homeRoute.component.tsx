@@ -18,7 +18,15 @@ const HomeRoute = (): React.JSX.Element => {
       <TravelGuide />
       <FAQ />
       <Footnote />
-      <ScrollToTop smooth color="#1b1c1e" />
+      <ScrollToTop
+        smooth
+        color="#1b1c1e"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      />
     </Fragment>
   );
 };

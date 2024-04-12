@@ -47,6 +47,7 @@ const TravelGuide = (): React.JSX.Element => {
         position="right center"
         closeOnDocumentClick
         onClose={closeForm}
+        className="rsvpPopup"
       >
         <InviteCodeForm closeForm={closeForm} />
       </Popup>
