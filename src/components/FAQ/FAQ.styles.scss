@@ -20,6 +20,12 @@
   }
 }
 
+@media screen and (min-width: 350px) {
+  .FAQContainer {
+    max-width: 320px;
+  }
+}
+
 .FAQListContainer {
   display: flex;
   flex-direction: column;

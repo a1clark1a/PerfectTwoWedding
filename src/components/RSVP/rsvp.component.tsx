@@ -188,7 +188,7 @@ const RSVP = ({
   };
 
   return (
-    <div className="popup-content">
+    <div className="rsvpForm">
       {currentVerifiedCode ? (
         <form
           onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
@@ -197,80 +197,89 @@ const RSVP = ({
             await handleRSVPSubmit(e);
           }}
         >
-          <h1>RSVP</h1>
-          <div>
-            <h2>Will you be attending?</h2>
+          <div className="rsvpFormTitles">
+            <h3 className="rsvpFormTitles">YOU'RE INVITED TO</h3>
+            <h2>SARA & CLARK'S WEDDING</h2>
+            <h5>Kindly RSVP by the 12th of August</h5>
+          </div>
+
+          <div className="guestContainer">
+            <h3>Will you be attending?</h3>
             {currentVerifiedCode.invitedNames?.length &&
               currentVerifiedCode.invitedNames.map((invitee: InvitedNames) => {
                 return (
-                  <div>
-                    <div>
-                      <h3>{invitee.name}</h3>
-                      <ToggleSwitch
-                        id={invitee.name}
-                        name={invitee.name}
-                        checked={handleChecked(invitee.name)}
-                        onChange={(e) => handleCheckbox(e)}
-                      />
-                    </div>
+                  <div className="rsvpFormLine invitee" key={invitee.name}>
+                    <span>{invitee.name}</span>
+                    <ToggleSwitch
+                      id={invitee.name}
+                      name={invitee.name}
+                      checked={handleChecked(invitee.name)}
+                      onChange={(e) => handleCheckbox(e)}
+                    />
                   </div>
                 );
               })}
+            <h5>We love your kids! We'd love for them to be there as well!</h5>
+            {/* ENSURE ONLY 1 INVITEE HAS ARRAY OF KIDS */}
             {currentVerifiedCode.kids &&
               currentVerifiedCode.kids.kidsNames.length &&
-              currentVerifiedCode.kids.allowKids && (
-                <div>
-                  <h3>Kids</h3>
-                  {/* ENSURE ONLY 1 INVITEE HAS ARRAY OF KIDS */}
-                  {currentVerifiedCode.kids.kidsNames.map((kid: Kid) => {
-                    return (
-                      <div>
-                        <h4>{kid.name}</h4>
-                        <ToggleSwitch
-                          id={kid.name}
-                          name={kid.name}
-                          checked={handleChecked(kid.name)}
-                          onChange={(e) => handleCheckbox(e)}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-
-            {currentVerifiedCode.plusOne?.allow && (
-              <div>
-                <h3>Would you like to bring a guest?</h3>
+              currentVerifiedCode.kids.allowKids &&
+              currentVerifiedCode.kids.kidsNames.map((kid: Kid) => {
+                return (
+                  <div className="rsvpFormLine kids" key={kid.name}>
+                    <span>{kid.name}</span>
+                    <ToggleSwitch
+                      id={kid.name}
+                      name={kid.name}
+                      checked={handleChecked(kid.name)}
+                      onChange={(e) => handleCheckbox(e)}
+                    />
+                  </div>
+                );
+              })}
+          </div>
+          {currentVerifiedCode.plusOne?.allow && (
+            <div className="guestContainer">
+              <h5>Oh look at that, You get to bring a plus one!</h5>
+              <div className="rsvpFormLine plusOne">
+                <span>Would you like to bring a guest?</span>
                 <ToggleSwitch
                   id={"addPlusOne"}
                   name={"addPlusOne"}
                   checked={formFields.addPlusOne}
                   onChange={(e) => handleAddPlusOne(e)}
                 />
-                {formFields.addPlusOne && (
-                  <FormInput
-                    label={"Guest Name"}
-                    inputOptions={{
-                      type: "text",
-                      name: "plusOneName",
-                      value: formFields.plusOneName,
-                      required: formFields.addPlusOne,
-                      onChange: handlePlusOneName,
-                    }}
-                  />
-                )}
               </div>
-            )}
-            <label>
-              Leave a message for the Bride and Groom.<span>(optional)</span>
-            </label>
+              {formFields.addPlusOne && (
+                <FormInput
+                  label={"Guest Name"}
+                  inputOptions={{
+                    type: "text",
+                    name: "plusOneName",
+                    value: formFields.plusOneName,
+                    required: formFields.addPlusOne,
+                    onChange: handlePlusOneName,
+                    className: "rsvpFormLine",
+                  }}
+                />
+              )}
+            </div>
+          )}
+          <div className="guestContainer message">
+            <h4>
+              Leave a message for the Bride and Groom <span>(optional).</span>
+            </h4>
             <textarea
               name="message"
               value={formFields.message}
               onChange={handleTextArea}
             />
           </div>
-          <button type="submit">Submit</button>
+          <div className="rsvpButtonContainer">
+            <button type="submit" className="rsvpFormSubmit">
+              Submit
+            </button>
+          </div>
         </form>
       ) : (
         <div>No User Detected</div>

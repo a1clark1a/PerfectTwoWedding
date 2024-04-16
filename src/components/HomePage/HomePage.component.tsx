@@ -52,7 +52,7 @@ const HomePage = (): React.JSX.Element => {
         position="right center"
         closeOnDocumentClick
         onClose={closeRSVPForm}
-        className="rsvpPopup"
+        className={!currentVerifiedCode ? "rsvpPopup" : "rsvpFormPopup"}
       >
         {!currentVerifiedCode ? (
           <InviteCodeForm />
