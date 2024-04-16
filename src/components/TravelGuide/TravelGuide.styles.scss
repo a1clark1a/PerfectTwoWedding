@@ -14,3 +14,11 @@
   width: 100%;
   justify-content: center;
 }
+a {
+  text-decoration: none;
+  color: #1b1c1e;
+  &:hover {
+    color: #48151b;
+    font-weight: bold;
+  }
+}

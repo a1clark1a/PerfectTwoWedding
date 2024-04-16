@@ -36,11 +36,11 @@ const Details = (): React.JSX.Element => {
               <div className="cardChildren">
                 <div>Date</div>
                 <span>Monday, September 23, 2024</span>
-                <span>------------------------------</span>
+                <hr />
                 <div>Ceremony & Reception</div>
                 <span>28950 Highway 18, Skyforest, CA 92385</span>
-                <span>Time: 3pm - 7pm</span>
-                <span>------------------------------</span>
+                <span>Time: 3pm - 8pm</span>
+                <hr />
                 <div>Attire</div>
                 <span>Formal | Cocktail</span>
               </div>
@@ -52,7 +52,7 @@ const Details = (): React.JSX.Element => {
             img={cocktailHourImg}
             children={
               <div className="cardChildren">
-                <div>Cocktail Hour will follow the ceremony</div>
+                <div>Cocktail hour will follow the ceremony</div>
                 <span>
                   Please enjoy beverages / alcohol, appetizers, and mini games
                 </span>

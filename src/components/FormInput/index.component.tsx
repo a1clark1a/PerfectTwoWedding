@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./FormInput.styles.scss";
+
 const FormInput = ({
   label,
   inputOptions,
@@ -17,9 +19,11 @@ const FormInput = ({
   };
 }): React.JSX.Element => {
   return (
-    <div className="form-group">
+    <div className={`inputContainer`}>
       {label && (
-        <label className={`${inputOptions.className}-label`}>{label}</label>
+        <label className={`${inputOptions.className}-label label`}>
+          {label}
+        </label>
       )}
       <input {...inputOptions} />
     </div>

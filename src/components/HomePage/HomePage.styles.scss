@@ -95,7 +95,6 @@
   margin: auto;
   background: rgb(255, 255, 255);
   width: 80%;
-
   padding: 5px;
 }
 .rsvpPopup-arrow {
@@ -110,6 +109,29 @@
   background: rgba(0, 0, 0, 0.5);
 }
 [data-popup="tooltip"].rsvpPopup-overlay {
+  background: transparent;
+}
+
+.rsvpFormPopup-content {
+  margin: auto;
+  background: rgb(255, 255, 255);
+  width: 90%;
+
+  padding: 10px 15px;
+  overflow: auto;
+}
+.rsvpFormPopup-arrow {
+  color: rgb(255, 255, 255);
+}
+[role="tooltip"].rsvpFormPopup-content {
+  width: 200px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+}
+
+.rsvpFormPopup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+[data-popup="tooltip"].rsvpFormPopup-overlay {
   background: transparent;
 }
 
