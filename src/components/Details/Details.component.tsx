@@ -54,7 +54,19 @@ const Details = (): React.JSX.Element => {
               <div className="cardChildren">
                 <div>Cocktail hour will follow the ceremony</div>
                 <span>
-                  Please enjoy beverages / alcohol, appetizers, and mini games
+                  Raise a glass to love and laughter during our cocktail hour,
+                  featuring a delightful array of drinks and appetizers. Join in
+                  mini games for a touch of excitement, and strike a pose at our
+                  photo booth to create cherished memories.
+                </span>
+                <hr></hr>
+                <div>Limited Open Bar</div>
+                <span>
+                  The bar will be available for service immediately following
+                  the ceremony and will remain open until 30 minutes before the
+                  conclusion of the reception. During brief intervals of
+                  closure, a neon sign will indicate the bar's status, signaling
+                  periods of operation and closure to guests.
                 </span>
               </div>
             }
@@ -67,6 +79,23 @@ const Details = (): React.JSX.Element => {
               <div className="cardChildren">
                 <div>Reception to follow cocktail hour</div>
                 <span>Reception ends at 8pm</span>
+                <span>
+                  Celebrate with us by signing our guest book and pinning your
+                  location on our world map, suggesting a destination for the
+                  bride and groom's future travels.
+                </span>
+                <hr></hr>
+                <span>
+                  Enjoy a delightful dinner and indulge in our exquisite
+                  selection of cakes and desserts.
+                </span>
+                <hr></hr>
+                <span>
+                  For those interested in contributing to our future adventures,
+                  the Honeymoon Fund QR code will be available.
+                </span>
+
+                <span>Thank you for being a part of our celebration!</span>
               </div>
             }
           />
