@@ -17,7 +17,7 @@ const FAQ = (): React.JSX.Element => {
     {
       title: "Is smoking allowed on the premise?",
       description:
-        "- Smoking is prohibited. There will be no designated smoking area. Please respect the venue and the forest around you.'Only you can prevent forest fires.' - Winnie the Pooh",
+        "- Smoking is prohibited in the Park.  A designated smoking area is located in the parking lot. Please respect the venue and the forest around you.'Only you can prevent forest fires.' - Winnie the Pooh",
     },
     {
       title: "Can I bring a guest?",
@@ -31,12 +31,17 @@ const FAQ = (): React.JSX.Element => {
     },
     {
       title: "Will there be parking?",
-      description: "-  Yes, free parking is available on the premise.",
+      description: "- Yes, free parking is available on the premise.",
     },
     {
       title: "Are children invited?",
       description:
-        "-  Although we love your children, we regretfully cannot accommodate them all. Thank you for your understanding.",
+        "- Although we love your children, we regretfully cannot accommodate them all. Thank you for your understanding.",
+    },
+    {
+      title: "What color should I wear?",
+      description:
+        "- To ensure an elegant and cohesive atmosphere, we kindly request that guests refrain from wearing white or any off-white hues to the wedding. Additionally, we ask that the attire you wear to not closely resemble the cabernet or burgundy tones chosen for the bridal party. Your cooperation in adhering to these guidelines is greatly appreciated, as it contributes to the overall ambiance of our special day. Thank you for your understanding and consideration.",
     },
   ];
 
