@@ -34,10 +34,33 @@ const TravelGuide = (): React.JSX.Element => {
             img={lodgingImg}
             children={
               <div className="cardChildren">
+                <div>Airbnb or Vrbo</div>
+                <span>
+                  <a
+                    href="https://www.airbnb.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Airbnb.com
+                  </a>{" "}
+                  or{" "}
+                  <a
+                    href="https://www.vrbo.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Vrbo.com
+                  </a>
+                </span>
+                <hr />
                 <div>Lake Arrowhead Resort & Spa</div>
-                <span>2.7 miles - 9 mintues away</span>
-                <span>27984 Highway 189 Lake Arrowhead, CA 92352</span>
-                <span>(909) 744-3062</span>
+                <span>
+                  2.7 miles - 9 mintues away
+                  <br></br>
+                  27984 Highway 189 Lake Arrowhead, CA 92352
+                  <br></br>
+                  (909) 744-3062
+                </span>
                 <a
                   href="https://www.lakearrowheadresort.com/"
                   target="_blank"
@@ -47,9 +70,13 @@ const TravelGuide = (): React.JSX.Element => {
                 </a>
                 <hr />
                 <div>The Kingsley Hotel</div>
-                <span>3.2 miles - 7 mintues away</span>
-                <span>306 Lock Leven Road Lake Arrowhead, CA 92352</span>
-                <span>(909) 719-0306</span>
+                <span>
+                  3.2 miles - 7 mintues away
+                  <br></br>
+                  306 Lock Leven Road Lake Arrowhead, CA 92352
+                  <br></br>
+                  (909) 719-0306
+                </span>
                 <a
                   href="https://www.thekingsleyla.com/"
                   target="_blank"
@@ -59,9 +86,13 @@ const TravelGuide = (): React.JSX.Element => {
                 </a>
                 <hr />
                 <div>SkyView Inn</div>
-                <span>0.5 miles - 3 mintues away</span>
-                <span>28717 State Highway 18 Skyforest, CA 92385</span>
-                <span>(909) 744-8822</span>
+                <span>
+                  0.5 miles - 3 mintues away
+                  <br></br>
+                  28717 State Highway 18 Skyforest, CA 92385
+                  <br></br>
+                  (909) 744-8822
+                </span>
                 <a
                   href="https://www.theskyviewinn.com/"
                   target="_blank"
@@ -71,11 +102,13 @@ const TravelGuide = (): React.JSX.Element => {
                 </a>
                 <hr />
                 <div>SaddleBack Inn</div>
-                <span>2.3 miles - 7 mintues away</span>
                 <span>
+                  2.3 miles - 7 mintues away
+                  <br></br>
                   300 South State Highway 173 Lake Arrowhead, CA 92352
+                  <br></br>
+                  (800) 858-3334
                 </span>
-                <span>(800) 858-3334</span>
                 <a
                   href="https://saddlebackinn.com/"
                   target="_blank"
@@ -93,11 +126,11 @@ const TravelGuide = (): React.JSX.Element => {
               <div className="cardChildren">
                 <div>SkyPark at Santa’s Village </div>
                 <span>
-                  Perfect for kids. Enjoy zipline, climbing tower, train ride,
-                  archery range, ax challenge, sharpshooter gallery, and more!
+                  A charming mountain retreat featuring thrilling outdoor
+                  activities, scenic beauty, and family-friendly fun.
                 </span>
                 <span>
-                  If you would like to buy tickets please contact the Bridge and
+                  If you would like to buy tickets please contact the Bride and
                   Groom for discounts.
                 </span>
                 <a
@@ -112,9 +145,9 @@ const TravelGuide = (): React.JSX.Element => {
                 <hr />
                 <div>Lake Arrowhead Village</div>
                 <span>
-                  Explore quaint shops, indulge in delicious dining options, and
-                  enjoy a variety of recreational activities, from boating and
-                  fishing to hiking and skiing.
+                  Explore quaint shops, delicious dining options, and enjoy a
+                  variety of recreational activities, and we are close to Big
+                  Bear!
                 </span>
                 <a
                   href="https://www.thelakearrowheadvillage.com/"

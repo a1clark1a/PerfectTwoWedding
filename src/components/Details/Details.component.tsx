@@ -38,6 +38,7 @@ const Details = (): React.JSX.Element => {
                 <span>Monday, September 23, 2024</span>
                 <hr />
                 <div>Ceremony & Reception</div>
+                <span>Sky Park</span>
                 <span>28950 Highway 18, Skyforest, CA 92385</span>
                 <span>Time: 3pm - 8pm</span>
                 <hr />
@@ -52,47 +53,43 @@ const Details = (): React.JSX.Element => {
             img={cocktailHourImg}
             children={
               <div className="cardChildren">
-                <div>Cocktail hour will follow the ceremony</div>
+                <div>Cocktail hour</div>
                 <span>
-                  Raise a glass to love and laughter during our cocktail hour,
-                  featuring a delightful array of drinks and appetizers. Join in
-                  mini games for a touch of excitement, and strike a pose at our
-                  photo booth to create cherished memories.
+                  Sign our guest book and pin your location on our world map,
+                  for the newlyweds' next adventure!
+                </span>
+                <hr></hr>
+                <span>
+                  Please enjoy beverages / alcohol, appetizers, photo booth, and
+                  mini games.
+                  <br />
+                  <br />
+                  <span>
+                    The Bride and Groom will each have their own specialty
+                    drink!
+                  </span>
                 </span>
                 <hr></hr>
                 <div>Limited Open Bar</div>
                 <span>
-                  The bar will be available for service immediately following
-                  the ceremony and will remain open until 30 minutes before the
-                  conclusion of the reception. During brief intervals of
-                  closure, a neon sign will indicate the bar's status, signaling
-                  periods of operation and closure to guests.
+                  The bar will be open starting from the end of the ceremony
+                  until 30 minutes before the reception ends. A neon sign will
+                  signal when it's closed.
                 </span>
               </div>
             }
           />
 
           <Card
-            label="Reception Hour"
+            label="Reception"
             img={receptionHourImg}
             children={
               <div className="cardChildren">
                 <div>Reception to follow cocktail hour</div>
                 <span>Reception ends at 8pm</span>
                 <span>
-                  Celebrate with us by signing our guest book and pinning your
-                  location on our world map, suggesting a destination for the
-                  bride and groom's future travels.
-                </span>
-                <hr></hr>
-                <span>
                   Enjoy a delightful dinner and indulge in our exquisite
-                  selection of cakes and desserts.
-                </span>
-                <hr></hr>
-                <span>
-                  For those interested in contributing to our future adventures,
-                  the Honeymoon Fund QR code will be available.
+                  selection of pastries and desserts.
                 </span>
 
                 <span>Thank you for being a part of our celebration!</span>
