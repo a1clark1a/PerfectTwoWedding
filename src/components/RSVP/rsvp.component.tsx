@@ -106,7 +106,7 @@ const RSVP = ({
           });
 
           if (kids.allowKids) {
-            kids.kidsNames.length &&
+            kids.kidsNames?.length &&
               kids.kidsNames.forEach((kid) => {
                 if (kid.name === name) {
                   kid.accepted = true;
@@ -129,7 +129,7 @@ const RSVP = ({
         });
 
         // check if kids is not on confirmed and is not yet added to denied add them to denied
-        kids?.kidsNames.forEach((kid) => {
+        kids?.kidsNames?.forEach((kid) => {
           if (
             !formFields.confirmed.includes(kid.name) &&
             !formFields.denied.includes(kid.name)
@@ -219,10 +219,14 @@ const RSVP = ({
                   </div>
                 );
               })}
-            <h5>We love your kids! We'd love for them to be there as well!</h5>
+            {currentVerifiedCode.kids.allowKids && (
+              <h5>
+                We love your kids! We'd love for them to be there as well!
+              </h5>
+            )}
             {/* ENSURE ONLY 1 INVITEE HAS ARRAY OF KIDS */}
             {currentVerifiedCode.kids &&
-              currentVerifiedCode.kids.kidsNames.length &&
+              currentVerifiedCode.kids?.kidsNames?.length &&
               currentVerifiedCode.kids.allowKids &&
               currentVerifiedCode.kids.kidsNames.map((kid: Kid) => {
                 return (

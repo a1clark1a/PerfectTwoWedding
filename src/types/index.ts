@@ -18,7 +18,6 @@ export type VerifiedCode = {
   kids: Kids;
   invitedNames: InvitedNames[];
   plusOne: PlusOne;
-  accepted: boolean;
   submit?: {
     submittedOn: Date;
     submitted: boolean;
@@ -39,7 +38,7 @@ export type PlusOne = {
 
 export interface Kids {
   allowKids: boolean;
-  kidsNames: Kid[];
+  kidsNames?: Kid[];
 }
 
 export type Kid = {
