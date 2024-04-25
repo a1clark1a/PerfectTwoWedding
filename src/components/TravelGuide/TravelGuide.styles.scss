@@ -23,3 +23,13 @@ a {
     font-weight: bold;
   }
 }
+
+@media screen and (min-width: 1200px) {
+  .travelGuideSection {
+    justify-content: center;
+  }
+  .travelGuideContainer {
+    display: flex;
+    flex-direction: row;
+  }
+}
