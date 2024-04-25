@@ -14,3 +14,13 @@
   width: 100%;
   justify-content: center;
 }
+
+@media screen and (min-width: 1200px) {
+  .memoryLaneSection {
+    justify-content: center;
+  }
+  .memoryLaneContainer {
+    display: flex;
+    flex-direction: row;
+  }
+}

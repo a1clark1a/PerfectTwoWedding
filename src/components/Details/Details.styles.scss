@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .detailsContainer {
@@ -13,4 +12,15 @@
   row-gap: 20px;
   width: 100%;
   justify-content: center;
+}
+
+@media screen and (min-width: 1200px) {
+  .detailsSection {
+    justify-content: center;
+  }
+
+  .detailsContainer {
+    display: flex;
+    flex-direction: row;
+  }
 }
