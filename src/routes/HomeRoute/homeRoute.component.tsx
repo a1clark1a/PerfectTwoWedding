@@ -13,9 +13,9 @@ const HomeRoute = (): React.JSX.Element => {
   return (
     <Fragment>
       <HomePage />
-      <MemoryLane />
       <Details />
       <TravelGuide />
+      <MemoryLane />
       <FAQ />
       <Footnote />
       <ScrollToTop

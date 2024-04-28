@@ -15,7 +15,7 @@ const FAQ = (): React.JSX.Element => {
         "- The ceremony starts at 3pm, please arrive at least 30 mins before the start.",
     },
     {
-      title: "Is smoking allowed on the premise?",
+      title: "Is smoking allowed on the premises?",
       description: (
         <>
           <span>
@@ -24,7 +24,7 @@ const FAQ = (): React.JSX.Element => {
             around you.
             <br></br>
             <br></br>
-            'Only you can prevent forest fires.' - Winnie the Pooh",
+            "Only you can prevent forest fires." - Winnie the Pooh
           </span>
         </>
       ),
@@ -64,7 +64,7 @@ const FAQ = (): React.JSX.Element => {
             <li>No cabernet or burgundy tones</li>
           </ul>
           <br></br>
-          <span>Thank you for your understanding and consideration.,</span>
+          <span>Thank you for your understanding and consideration.</span>
         </>
       ),
     },

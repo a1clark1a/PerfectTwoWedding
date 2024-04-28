@@ -40,7 +40,7 @@ const InviteCodeForm = ({ closeForm }: { closeForm?: () => void }) => {
             value: inviteCode,
             required: true,
             placeholder: "Invite Code",
-            autoComplete: "false",
+            autoComplete: "on",
             className: "inviteFormInput",
           }}
         />
