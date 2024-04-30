@@ -262,6 +262,31 @@ export const submitRSVPToFirebase = async (
   });
 };
 
+export const getImages = (folderName: string) => {
+  return new Promise<any[]>(async (resolve, reject) => {
+    try {
+      const imagesCollectionRef = await collection(
+        db,
+        "images",
+        folderName,
+        "images"
+      ); //db collection docId
+      const imagesSnapshot = await getDocs(imagesCollectionRef);
+      console.log(imagesSnapshot);
+
+      let imageArray: any[] = [];
+      imagesSnapshot.forEach((doc) => {
+        imageArray.push(doc.data());
+      });
+
+      console.log(imageArray);
+      resolve(imageArray);
+    } catch (error) {
+      reject(new Error(`Failed to fetch images: ${error}`));
+    }
+  });
+};
+
 export const debounce = <T extends (...args: any[]) => void>(
   func: T,
   delay: number
