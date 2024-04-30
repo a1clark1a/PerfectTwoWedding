@@ -11,6 +11,7 @@ import "reactjs-popup/dist/index.css";
 import "./HomePage.styles.scss";
 
 import mobileBackgroundImage1 from "../../images/SAR01109-02.jpg";
+import { getImages } from "../../firebase/utils";
 
 const HomePage = (): React.JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
@@ -42,7 +43,14 @@ const HomePage = (): React.JSX.Element => {
           </span>
         </div>
         <div className="content rsvpButtonContainer">
-          <button className="rsvpButton" onClick={() => setOpenModal(true)}>
+          <button
+            className="rsvpButton"
+            onClick={() => {
+              setOpenModal(true);
+
+              getImages("Engagement");
+            }}
+          >
             RSVP
           </button>
         </div>
