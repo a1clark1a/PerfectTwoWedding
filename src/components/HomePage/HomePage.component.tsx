@@ -47,8 +47,6 @@ const HomePage = (): React.JSX.Element => {
             className="rsvpButton"
             onClick={() => {
               setOpenModal(true);
-
-              getImages("Engagement");
             }}
           >
             RSVP
