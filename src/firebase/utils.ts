@@ -24,6 +24,7 @@ import {
   query,
   getDocs,
   where,
+  orderBy,
 } from "firebase/firestore";
 
 // Types
@@ -271,7 +272,9 @@ export const getImages = (folderName: string) => {
         folderName,
         "images"
       ); //db collection docId
-      const imagesSnapshot = await getDocs(imagesCollectionRef);
+
+      const q = query(imagesCollectionRef, orderBy("fileName", "asc"));
+      const imagesSnapshot = await getDocs(q);
       console.log(imagesSnapshot);
 
       let imageArray: any[] = [];
@@ -279,7 +282,6 @@ export const getImages = (folderName: string) => {
         imageArray.push(doc.data());
       });
 
-      console.log(imageArray);
       resolve(imageArray);
     } catch (error) {
       reject(new Error(`Failed to fetch images: ${error}`));

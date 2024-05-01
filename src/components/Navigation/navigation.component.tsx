@@ -23,13 +23,13 @@ const Navigation = (): React.JSX.Element => {
           </div>
           <ul className="menu-items">
             <li>
-              <a href="#memoryLane">MEMORY LANE</a>
-            </li>
-            <li>
               <a href="#theDetails">THE DETAILS</a>
             </li>
             <li>
               <a href="#travelGuide">TRAVEL GUIDE</a>
+            </li>
+            <li>
+              <a href="#memoryLane">MEMORY LANE</a>
             </li>
             <li>
               <a href="#FAQs">FAQs</a>
