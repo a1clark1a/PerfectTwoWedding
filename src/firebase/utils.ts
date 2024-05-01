@@ -275,7 +275,6 @@ export const getImages = (folderName: string) => {
 
       const q = query(imagesCollectionRef, orderBy("fileName", "asc"));
       const imagesSnapshot = await getDocs(q);
-      console.log(imagesSnapshot);
 
       let imageArray: any[] = [];
       imagesSnapshot.forEach((doc) => {

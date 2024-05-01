@@ -35,7 +35,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         if (docRef) {
           // get user information
           const newUser = await getUser(docRef.id);
-          console.log("newUser", newUser);
+
           if (newUser) {
             setCurrentUser(newUser);
             navigate("/home");

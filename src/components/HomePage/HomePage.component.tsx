@@ -23,7 +23,6 @@ const HomePage = (): React.JSX.Element => {
     setOpenModal(false);
   };
 
-  console.log(currentVerifiedCode);
   return (
     <section
       className="homePageSection"
