@@ -26,7 +26,6 @@ export const VerifiedCodeProvider = ({
 
   const getCode = () => {
     return new Promise<void>((resolve, reject) => {
-      console.log("called", inviteCode);
       verifyInviteCode(inviteCode)
         .then((resp) => {
           setCurrentVerifiedCode(resp);
