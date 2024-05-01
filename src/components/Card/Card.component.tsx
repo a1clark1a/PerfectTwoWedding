@@ -8,10 +8,12 @@ const Card = ({
   label,
   img,
   children,
+  callback,
 }: {
   label: string;
   img?: string;
   children: React.JSX.Element;
+  callback?: () => void;
 }): React.JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
   const closeRSVPForm = (): void => {
@@ -27,7 +29,13 @@ const Card = ({
           className="cardImage"
         />
       </div>
-      <button className="cardButton" onClick={() => setOpenModal(true)}>
+      <button
+        className="cardButton"
+        onClick={() => {
+          setOpenModal(true);
+          callback && callback();
+        }}
+      >
         {label.toUpperCase()}
       </button>
       <Popup

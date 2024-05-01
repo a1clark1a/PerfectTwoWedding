@@ -11,7 +11,6 @@ import "reactjs-popup/dist/index.css";
 import "./HomePage.styles.scss";
 
 import mobileBackgroundImage1 from "../../images/SAR01109-02.jpg";
-import { getImages } from "../../firebase/utils";
 
 const HomePage = (): React.JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
