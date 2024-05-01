@@ -26,10 +26,10 @@ const MemoryLane = (): React.JSX.Element => {
             <div className="cardChildren">
               Our Journey
               <div>
-                <img src={images[0].url} />;
+                <img src={images.length && images[0].url} />;
                 {/* {images.length &&
                   images.map((image) => {
-                    return <img src={images[0].url} />;
+                    return <img src={image.url} />;
                   })} */}
               </div>
             </div>
