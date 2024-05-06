@@ -9,11 +9,13 @@ const Card = ({
   img,
   children,
   callback,
+  popupClassName,
 }: {
   label: string;
   img?: string;
-  children: React.JSX.Element;
+  children: React.JSX.Element | any;
   callback?: () => void;
+  popupClassName?: string;
 }): React.JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
   const closeRSVPForm = (): void => {
@@ -41,11 +43,16 @@ const Card = ({
       <Popup
         open={openModal}
         position="right center"
-        closeOnDocumentClick
+        closeOnDocumentClick={false}
         onClose={closeRSVPForm}
-        className="cardPopup"
+        className={`cardPopup ${popupClassName}`}
       >
         {children}
+        <div className="modal">
+          <button className="close" onClick={closeRSVPForm}>
+            &times;
+          </button>
+        </div>
       </Popup>
     </div>
   );

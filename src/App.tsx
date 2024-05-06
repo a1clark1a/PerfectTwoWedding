@@ -21,7 +21,6 @@ function App(): React.JSX.Element {
 
   return (
     <div style={{ backgroundImage: `url(${backgroundImage})` }}>
-      <NavigationRoute />
       <HomeRoute />
     </div>
     // <Routes>

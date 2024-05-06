@@ -45,3 +45,13 @@ export type Kid = {
   name: string;
   accepted: boolean;
 };
+
+export interface ImagesFolder {
+  [folderName: string]: Images[];
+}
+
+export type Images = {
+  src: string;
+  width: number;
+  height: number;
+};
