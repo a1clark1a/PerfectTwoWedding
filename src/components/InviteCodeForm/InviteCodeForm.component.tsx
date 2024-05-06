@@ -24,29 +24,36 @@ const InviteCodeForm = ({ closeForm }: { closeForm?: () => void }) => {
   };
 
   return (
-    <form onSubmit={handleInviteCode} className="inviteCodeForm">
-      <div className="inviteTitleContainer">
-        <h3>Welcome!</h3>
-        <h4>TO SARA & CLARK'S WEDDING</h4>
-        <h6>we would love for you to share this memory with us.</h6>
+    <>
+      <form onSubmit={handleInviteCode} className="inviteCodeForm">
+        <div className="inviteTitleContainer">
+          <h3>Welcome!</h3>
+          <h4>TO SARA & CLARK'S WEDDING</h4>
+          <h6>we would love for you to share this memory with us.</h6>
+        </div>
+        <div className="inviteInputContainer">
+          <FormInput
+            label="Please enter your one of a kind Code"
+            inputOptions={{
+              type: "text",
+              onChange: handleInput,
+              name: "InviteCode",
+              value: inviteCode,
+              required: true,
+              placeholder: "Invite Code",
+              autoComplete: "on",
+              className: "inviteFormInput",
+            }}
+          />
+          <button type="submit">Enter</button>
+        </div>
+      </form>
+      <div className="modal">
+        <button className="close" onClick={closeForm}>
+          &times;
+        </button>
       </div>
-      <div className="inviteInputContainer">
-        <FormInput
-          label="Please enter your one of a kind Code"
-          inputOptions={{
-            type: "text",
-            onChange: handleInput,
-            name: "InviteCode",
-            value: inviteCode,
-            required: true,
-            placeholder: "Invite Code",
-            autoComplete: "on",
-            className: "inviteFormInput",
-          }}
-        />
-        <button type="submit">Enter</button>
-      </div>
-    </form>
+    </>
   );
 };
 

@@ -58,16 +58,23 @@ const HomePage = (): React.JSX.Element => {
         onClose={closeRSVPForm}
         className={!currentVerifiedCode ? "rsvpPopup" : "rsvpFormPopup"}
       >
-        {!currentVerifiedCode ? (
-          <InviteCodeForm />
-        ) : alreadySubmitted ? (
-          <div>
-            You've already submitted your answer. If you wish to change it
-            contact the Bride and Groom
+        <>
+          {!currentVerifiedCode ? (
+            <InviteCodeForm />
+          ) : alreadySubmitted ? (
+            <div>
+              You've already submitted your answer. If you wish to change it
+              contact the Bride and Groom
+            </div>
+          ) : (
+            <RSVP setCloseRSVP={closeRSVPForm} />
+          )}
+          <div className="modal">
+            <button className="close" onClick={closeRSVPForm}>
+              &times;
+            </button>
           </div>
-        ) : (
-          <RSVP setCloseRSVP={closeRSVPForm} />
-        )}
+        </>
       </Popup>
     </section>
   );

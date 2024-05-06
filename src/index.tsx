@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 //import { UserProvider } from "./context/user.context";
 import { VerifiedCodeProvider } from "./context/verifiedCode.context";
+import { ImagesProvider } from "./context/images.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -14,7 +15,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <VerifiedCodeProvider>
-        <App />
+        <ImagesProvider>
+          <App />
+        </ImagesProvider>
       </VerifiedCodeProvider>
     </BrowserRouter>
   </React.StrictMode>
