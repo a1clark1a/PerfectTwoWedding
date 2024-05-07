@@ -283,170 +283,177 @@ export const getImagesFromFirebase = (folderName: string) => {
         const image = doc.data();
         imageArray.push({
           src: image.url,
+          width: image.width,
+          height: image.height,
+          aspectRatio: image.aspectRatio,
         });
       });
 
       // coz metadata has no width or height use JS to get it
-      const loadedImages = await Promise.all(
-        // ensure process continues as long as 1 is successful
-        imageArray.map(async (image, i) => {
-          // console.log("running for folder", folderName, i);
-          try {
-            const img = new Image();
-            img.src = image.src;
-            await new Promise((resolve, reject) => {
-              img.onload = resolve;
-              img.onerror = reject;
-            });
-            const aspectRatio = img.width / img.height;
+      // const loadedImages = await Promise.all(
+      //   // ensure process continues as long as 1 is successful
+      //   imageArray.map(async (image, i) => {
+      //     // console.log("running for folder", folderName, i);
+      //     try {
+      //       const img = new Image();
+      //       img.src = image.src;
+      //       await new Promise((resolve, reject) => {
+      //         img.onload = resolve;
+      //         img.onerror = reject;
+      //       });
+      //       const aspectRatio = img.width / img.height;
 
-            const imageMetadata = {
-              src: image.src,
-              aspectRatio,
-              ...image,
-              width: img.width,
-              height: img.height,
-            };
+      //       const imageMetadata = {
+      //         src: image.src,
+      //         aspectRatio,
+      //         ...image,
+      //         width: img.width,
+      //         height: img.height,
+      //       };
 
-            return imageMetadata;
-          } catch (err) {
-            console.error("Error loading image:", image, err);
-            return { src: image.src, aspectRatio: 1 }; // Default aspect ratio for failed images
-          }
-        })
-      );
+      //       return imageMetadata;
+      //     } catch (err) {
+      //       console.error("Error loading image:", image, err);
+      //       return { src: image.src, aspectRatio: 1 }; // Default aspect ratio for failed images
+      //     }
+      //   })
+      // );
 
-      resolve(loadedImages);
+      resolve(imageArray);
     } catch (error: any) {
       reject(new Error(`Failed to fetch images: ${error}`));
     }
   });
 };
 
-const insertIntoIDB = async (image: any, folderName: string) => {
-  const request = indexedDB.open("ImageMetadataDB", 1);
-  console.log("inserting to indexDB", image);
-  // Handle database upgrade (creation) or version change
-  request.onupgradeneeded = function (event: any) {
-    const db = event.target.result;
+/**
+ * IndexedDB functions currently not used
+ */
 
-    // Create an object store (similar to a table in SQL databases)
-    const objectStore = db.createObjectStore(folderName, {
-      keyPath: "id",
-      autoIncrement: true,
-    });
+// const insertIntoIDB = async (image: any, folderName: string) => {
+//   const request = indexedDB.open("ImageMetadataDB", 1);
+//   console.log("inserting to indexDB", image);
+//   // Handle database upgrade (creation) or version change
+//   request.onupgradeneeded = function (event: any) {
+//     const db = event.target.result;
 
-    // Define the structure of the data to be stored
-    objectStore.createIndex("name", "name", { unique: false });
-    objectStore.createIndex("url", "url", { unique: true });
-    // Add more indexes as needed
+//     // Create an object store (similar to a table in SQL databases)
+//     const objectStore = db.createObjectStore(folderName, {
+//       keyPath: "id",
+//       autoIncrement: true,
+//     });
 
-    console.log("Database setup complete");
-  };
+//     // Define the structure of the data to be stored
+//     objectStore.createIndex("name", "name", { unique: false });
+//     objectStore.createIndex("url", "url", { unique: true });
+//     // Add more indexes as needed
 
-  // Handle database opening success
-  request.onsuccess = function (event: any) {
-    const db = event.target.result;
+//     console.log("Database setup complete");
+//   };
 
-    // Add data to the object store
-    const transaction = db.transaction([folderName], "readwrite");
-    const objectStore = transaction.objectStore(folderName);
+//   // Handle database opening success
+//   request.onsuccess = function (event: any) {
+//     const db = event.target.result;
 
-    // Add the metadata to the object store
-    const addRequest = objectStore.add(image);
+//     // Add data to the object store
+//     const transaction = db.transaction([folderName], "readwrite");
+//     const objectStore = transaction.objectStore(folderName);
 
-    // Handle successful addition
-    addRequest.onsuccess = function (event: any) {
-      console.log("Image metadata added to database");
-    };
+//     // Add the metadata to the object store
+//     const addRequest = objectStore.add(image);
 
-    // Handle addition failure
-    addRequest.onerror = function (event: any) {
-      console.error("Error adding image metadata:", event.target.error);
-    };
-  };
+//     // Handle successful addition
+//     addRequest.onsuccess = function (event: any) {
+//       console.log("Image metadata added to database");
+//     };
 
-  // Handle database opening failure
-  request.onerror = function (event: any) {
-    console.error("Database error:", event.target.error);
-  };
-};
+//     // Handle addition failure
+//     addRequest.onerror = function (event: any) {
+//       console.error("Error adding image metadata:", event.target.error);
+//     };
+//   };
 
-export const getImagesFromIDB = async (
-  folderName: string
-): Promise<Images[]> => {
-  return new Promise((resolve, reject) => {
-    // Open the database
-    const request: IDBOpenDBRequest = indexedDB.open("ImageMetadataDB", 1);
+//   // Handle database opening failure
+//   request.onerror = function (event: any) {
+//     console.error("Database error:", event.target.error);
+//   };
+// };
 
-    // Handle database opening success
+// export const getImagesFromIDB = async (
+//   folderName: string
+// ): Promise<Images[]> => {
+//   return new Promise((resolve, reject) => {
+//     // Open the database
+//     const request: IDBOpenDBRequest = indexedDB.open("ImageMetadataDB", 1);
 
-    request.onsuccess = function (event: Event) {
-      const db = (event.target as IDBOpenDBRequest).result;
+//     // Handle database opening success
 
-      // Open a transaction to access the object store
-      const transaction = db.transaction([folderName], "readonly");
-      const objectStore = transaction.objectStore(folderName);
+//     request.onsuccess = function (event: Event) {
+//       const db = (event.target as IDBOpenDBRequest).result;
 
-      // Retrieve all image metadata
-      const getAllRequest = objectStore.getAll();
+//       // Open a transaction to access the object store
+//       const transaction = db.transaction([folderName], "readonly");
+//       const objectStore = transaction.objectStore(folderName);
 
-      // Handle success of retrieving all image metadata
-      getAllRequest.onsuccess = function (event) {
-        const imageData = (event.target as IDBOpenDBRequest).result;
-        console.log("Retrieved image metadata:", imageData);
-        resolve(imageData as unknown as Images[]);
-      };
+//       // Retrieve all image metadata
+//       const getAllRequest = objectStore.getAll();
 
-      // Handle failure of retrieving image metadata
-      getAllRequest.onerror = function (event) {
-        console.error(
-          "Database error:",
-          (event.target as IDBOpenDBRequest).error
-        );
-      };
-    };
+//       // Handle success of retrieving all image metadata
+//       getAllRequest.onsuccess = function (event) {
+//         const imageData = (event.target as IDBOpenDBRequest).result;
+//         console.log("Retrieved image metadata:", imageData);
+//         resolve(imageData as unknown as Images[]);
+//       };
 
-    // Handle database opening failure
-    request.onerror = function (event) {
-      console.error(
-        "Database error:",
-        (event.target as IDBOpenDBRequest).error
-      );
-      reject(`Database error: ${(event.target as IDBOpenDBRequest).error}`);
-    };
-  });
-};
+//       // Handle failure of retrieving image metadata
+//       getAllRequest.onerror = function (event) {
+//         console.error(
+//           "Database error:",
+//           (event.target as IDBOpenDBRequest).error
+//         );
+//       };
+//     };
 
-export const checkIfImageMetadataDBExists = async (folderName: string) => {
-  return new Promise((resolve, reject) => {
-    // Open or create a database
-    const request: IDBOpenDBRequest = indexedDB.open("ImageMetadataDB", 1);
+//     // Handle database opening failure
+//     request.onerror = function (event) {
+//       console.error(
+//         "Database error:",
+//         (event.target as IDBOpenDBRequest).error
+//       );
+//       reject(`Database error: ${(event.target as IDBOpenDBRequest).error}`);
+//     };
+//   });
+// };
 
-    request.onsuccess = function (event: Event) {
-      const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
+// export const checkIfImageMetadataDBExists = async (folderName: string) => {
+//   return new Promise((resolve, reject) => {
+//     // Open or create a database
+//     const request: IDBOpenDBRequest = indexedDB.open("ImageMetadataDB", 1);
 
-      const objectStoreNames = db.objectStoreNames;
+//     request.onsuccess = function (event: Event) {
+//       const db: IDBDatabase = (event.target as IDBOpenDBRequest).result;
 
-      // check if there are any objectStore
-      if (objectStoreNames.length <= 0) resolve(false);
+//       const objectStoreNames = db.objectStoreNames;
 
-      // check if there is an objectStore with the folderName
-      if (objectStoreNames.contains(folderName)) {
-        const transaction = db.transaction(folderName);
-        const countRequest = transaction.objectStore(folderName).count();
-        countRequest.onsuccess = function (event: Event) {
-          const count = (event.target as IDBRequest<number>).result;
-          if (count > 0) resolve(true);
+//       // check if there are any objectStore
+//       if (objectStoreNames.length <= 0) resolve(false);
 
-          resolve(false);
-        };
-      } else {
-        resolve(false);
-      }
-    };
-  });
-};
+//       // check if there is an objectStore with the folderName
+//       if (objectStoreNames.contains(folderName)) {
+//         const transaction = db.transaction(folderName);
+//         const countRequest = transaction.objectStore(folderName).count();
+//         countRequest.onsuccess = function (event: Event) {
+//           const count = (event.target as IDBRequest<number>).result;
+//           if (count > 0) resolve(true);
+
+//           resolve(false);
+//         };
+//       } else {
+//         resolve(false);
+//       }
+//     };
+//   });
+// };
 
 export const debounce = <T extends (...args: any[]) => void>(
   func: T,
