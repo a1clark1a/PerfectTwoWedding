@@ -17,8 +17,6 @@ const MemoryLane = (): React.JSX.Element => {
   const { images, getImages, imagesLoading, setImagesLoading } =
     useContext(ImagesContext);
 
-  // console.log(imagesLoading);
-  // console.log(images);
   return (
     <section id="memoryLane" className="memoryLaneSection">
       <h2 className="sectionTitles">Memory Lane</h2>

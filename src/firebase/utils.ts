@@ -101,7 +101,9 @@ export const verifyInviteCode = async (inviteCode: string) => {
   if (docSnap.exists()) {
     return docSnap.data() as VerifiedCode;
   } else {
-    throw new Error("Invite code not found");
+    throw new Error(
+      "Invite code does not exist or does not match anyone on our invite list."
+    );
   }
 };
 
@@ -210,18 +212,32 @@ export const submitRSVPToFirebase = async (
   newConfirmed: string[],
   newDenied: string[]
 ) => {
-  return new Promise<void>(async (resolve, reject) => {
+  return new Promise<VerifiedCode>(async (resolve, reject) => {
     try {
       if (verifiedCode == null) throw new Error("No Code Detected");
       const rsvpDocRef = await doc(db, "rsvp", "rsvp"); //db collection docId
       const rsvpSnapshot = await getDoc(rsvpDocRef);
 
       let newDoc = {
-        confirmed: newConfirmed,
-        denied: newDenied,
+        confirmed: [] as string[],
+        denied: [] as string[],
       };
+
+      // add submite date
+      verifiedCode.submit = {
+        submittedOn: new Date(),
+        submitted: true,
+      };
+
+      //  throw new Error("Test error");
+
       // if no doc
       if (!rsvpSnapshot.exists()) {
+        newDoc = {
+          confirmed: newConfirmed,
+          denied: newDenied,
+        };
+
         await setDoc(rsvpDocRef, {
           ...newDoc,
           code: verifiedCode.inviteCode,
@@ -230,13 +246,15 @@ export const submitRSVPToFirebase = async (
         // change to guestLists
         const guestListsDocRef = doc(
           db,
-          "exampleData ",
+          "exampleData",
           verifiedCode.inviteCode
         ); //db collection docId
+
         await setDoc(guestListsDocRef, verifiedCode);
-        resolve();
+        return resolve(verifiedCode);
       }
 
+      // a snapshot exists
       const rsvpDoc = rsvpSnapshot.data();
       newDoc = {
         confirmed: [...rsvpDoc?.confirmed, ...newConfirmed],
@@ -255,8 +273,10 @@ export const submitRSVPToFirebase = async (
         "exampleData",
         verifiedCode.inviteCode
       ); //db collection docId
+
       await setDoc(guestListsDocRef, verifiedCode);
-      resolve();
+
+      resolve(verifiedCode);
     } catch (error) {
       reject(new Error(`Failed to submit RSVP: ${error}`));
     }

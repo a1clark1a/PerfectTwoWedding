@@ -1,25 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import Popup from "reactjs-popup";
+
+import FormInput from "../FormInput/index.component";
+import ErrorComponent from "../Error/Error.component";
 
 import { VerifiedCodeContext } from "../../context/verifiedCode.context";
 
 import "./InviteCodeForm.styles.scss";
-import FormInput from "../FormInput/index.component";
 
 const InviteCodeForm = ({ closeForm }: { closeForm?: () => void }) => {
-  const { getCode, inviteCode, setInviteCode } =
+  const [showError, setShowError] = useState<boolean>(false);
+  const { getCode, inviteCode, setInviteCode, error } =
     useContext(VerifiedCodeContext);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newCode = e.target.value;
     setInviteCode(newCode);
+    setShowError(false);
   };
 
-  const handleInviteCode = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleInviteCode = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    getCode();
-    if (closeForm) {
-      closeForm();
+    try {
+      await getCode();
+
+      closeForm && closeForm();
+    } catch (err) {
+      setTimeout(() => {
+        setShowError(true);
+      }, 500);
     }
   };
 
@@ -53,6 +63,16 @@ const InviteCodeForm = ({ closeForm }: { closeForm?: () => void }) => {
           &times;
         </button>
       </div>
+      <Popup
+        open={showError}
+        onClose={() => {
+          setShowError(false);
+        }}
+        closeOnDocumentClick
+        className="errorPopup"
+      >
+        <ErrorComponent error={error} closeForm={() => setShowError(false)} />
+      </Popup>
     </>
   );
 };

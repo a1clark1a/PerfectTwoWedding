@@ -54,10 +54,61 @@
   }
 }
 
+.rsvpResponseContainer {
+  display: block;
+  text-align: center;
+
+  .rsvpResponseTitle {
+    font-family: "nimbus-sans", sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    font-style: normal;
+    padding: 20px;
+  }
+
+  .rsvpResponeInfo {
+    font-family: "nimbus-sans", sans-serif;
+  }
+
+  .listNamesTitle {
+    padding: 10px 20px 0 20px;
+    font-family: "nimbus-sans", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  .listNames {
+    font-family: "nimbus-sans", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 10px;
+  }
+
+  .inviteeMessageTitle {
+    font-family: "nimbus-sans", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  .inviteeMessage {
+    font-family: "nimbus-sans", sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    font-style: italic;
+    padding: 15px;
+  }
+}
+
 //screen width 401px up and height 901+
 @media screen and (max-height: 900px) {
   .homePageContainer {
     grid-template-rows: 0fr 2fr 0.5fr 7fr;
+  }
+  .errorPopup-content {
+    width: 70%;
   }
 }
 
@@ -71,6 +122,17 @@
   .homePageContainer {
     grid-template-rows: 0fr 2fr 0.5fr 5fr;
   }
+}
+
+.popup-content {
+  background-image: url("../../images/background-02-01-01.jpg");
+}
+
+.errorPopup-content,
+.confirmPopup-content {
+  display: block;
+  align-content: center;
+  min-width: 300px;
 }
 
 .rsvpButtonContainer {
@@ -114,7 +176,7 @@
 
 .rsvpFormPopup-content {
   margin: auto;
-  background: rgb(255, 255, 255);
+  //background: rgb(255, 255, 255);
   width: 90%;
 
   padding: 10px 15px;

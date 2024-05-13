@@ -24,23 +24,20 @@ export const ImagesProvider = ({ children }: { children: React.ReactNode }) => {
         console.log("already has images");
         resolve();
       }
-      try {
-        getImagesFromFirebase(folderName)
-          .then((resp: Images[]) => {
-            images[folderName] = resp;
-            setImages(images);
-            setImagesLoading(false);
-            resolve();
-          })
-          .catch((err: any) => {
-            setImagesError(`Images Error: ${err}`);
-            setImagesLoading(false);
-            console.log(err);
-            reject(`${err}`);
-          });
-      } catch (error) {
-        console.log(error);
-      }
+
+      getImagesFromFirebase(folderName)
+        .then((resp: Images[]) => {
+          images[folderName] = resp;
+          setImages(images);
+          setImagesLoading(false);
+          resolve();
+        })
+        .catch((err: any) => {
+          setImagesError(`Images Error: ${err}`);
+          setImagesLoading(false);
+          console.log(err);
+          reject(`${err}`);
+        });
     });
   }, 1000);
 
