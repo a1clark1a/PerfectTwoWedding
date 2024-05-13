@@ -55,3 +55,8 @@ export type Images = {
   width: number;
   height: number;
 };
+
+export type Error = {
+  title: string;
+  message: string;
+};

@@ -1,17 +1,22 @@
 import { createContext, useState } from "react";
 
-import { verifyInviteCode } from "../firebase/utils";
+import { submitRSVPToFirebase, verifyInviteCode } from "../firebase/utils";
 
-import { VerifiedCode } from "../types";
+import { VerifiedCode, Error } from "../types";
 
 export const VerifiedCodeContext = createContext({
   currentVerifiedCode: null as VerifiedCode | null,
   setCurrentVerifiedCode: (verifiedCode: VerifiedCode | null) => {},
   inviteCode: "",
   setInviteCode: (code: string) => {},
-  error: "",
-  setError: (errorMessage: string) => {},
-  getCode: () => {},
+  error: { title: "", message: "" } as Error,
+  setError: (errorObj: Error) => {},
+  getCode: () => Promise.resolve(),
+  submitRSVP: (
+    updatedVerifiedCode: VerifiedCode,
+    confirmed: string[],
+    denied: string[]
+  ) => Promise.resolve(),
 });
 
 export const VerifiedCodeProvider = ({
@@ -22,7 +27,7 @@ export const VerifiedCodeProvider = ({
   const [currentVerifiedCode, setCurrentVerifiedCode] =
     useState<VerifiedCode | null>(null);
   const [inviteCode, setInviteCode] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState({ title: "", message: "" });
 
   const getCode = () => {
     return new Promise<void>((resolve, reject) => {
@@ -31,9 +36,33 @@ export const VerifiedCodeProvider = ({
           setCurrentVerifiedCode(resp);
           resolve();
         })
-        .catch((err: any) => {
-          setError(`Invite code Error: ${err}`);
-          reject(`Invite code Error: ${err}`);
+        .catch((error) => {
+          setError({
+            title: "Something went wrong with your invite code!",
+            message: error.message,
+          });
+          reject(`Invite code Error: ${error.message}`);
+        });
+    });
+  };
+
+  const submitRSVP = (
+    updatedVerifiedCode: VerifiedCode,
+    confirmed: string[],
+    denied: string[]
+  ) => {
+    return new Promise<void>((resolve, reject) => {
+      submitRSVPToFirebase(updatedVerifiedCode, confirmed, denied)
+        .then((resp) => {
+          setCurrentVerifiedCode(resp);
+          resolve();
+        })
+        .catch((error) => {
+          setError({
+            title: "Something went wrong with your RSVP!",
+            message: error.message,
+          });
+          reject(error.message);
         });
     });
   };
@@ -46,6 +75,7 @@ export const VerifiedCodeProvider = ({
     error,
     setError,
     getCode,
+    submitRSVP,
   };
   return (
     <VerifiedCodeContext.Provider value={value}>

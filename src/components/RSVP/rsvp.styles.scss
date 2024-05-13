@@ -59,3 +59,55 @@
   border-radius: 10px;
   padding: 10px;
 }
+
+.confirmContainer {
+  text-align: center;
+}
+
+.confirmTitle {
+  font-weight: 600;
+  font-size: 24px;
+  padding: 10px;
+}
+
+.confirmMessage {
+  font-size: 18px;
+}
+
+.confirmButtonContainer {
+  padding: 15px 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.confirmClose {
+  min-width: 120px;
+  font-family: "nimbus-sans", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+  padding: 8px;
+  background-color: #fafafa;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #1b1c1e;
+  border-width: 1px;
+  line-height: 24px;
+  letter-spacing: 2px;
+  color: #1b1c1e;
+}
+
+.confirmSubmit {
+  background-color: #48151b;
+  font-family: "nimbus-sans", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+  min-width: 120px;
+  line-height: 24px;
+  letter-spacing: 2px;
+  color: #fafafa;
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+}

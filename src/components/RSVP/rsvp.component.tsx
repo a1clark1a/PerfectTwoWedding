@@ -1,12 +1,16 @@
 import React, { useContext, useState } from "react";
+import cloneDeep from "lodash-es/cloneDeep";
 
 import { VerifiedCodeContext } from "../../context/verifiedCode.context";
+import { debounce } from "../../firebase/utils";
+import { InvitedNames, Kid } from "../../types";
 
-import "./rsvp.styles.scss";
 import ToggleSwitch from "../ToggleSwitch/toggleSwitch.component";
 import FormInput from "../FormInput/index.component";
-import { debounce, submitRSVPToFirebase } from "../../firebase/utils";
-import { InvitedNames, Kid } from "../../types";
+import ErrorComponent from "../Error/Error.component";
+
+import "./rsvp.styles.scss";
+import Popup from "reactjs-popup";
 
 const defaultFormFields = {
   confirmed: [],
@@ -27,8 +31,11 @@ const RSVP = ({
 }: {
   setCloseRSVP: () => void;
 }): React.JSX.Element => {
-  const { currentVerifiedCode } = useContext(VerifiedCodeContext);
+  const { currentVerifiedCode, submitRSVP, error } =
+    useContext(VerifiedCodeContext);
   const [formFields, setFormFields] = useState(defaultFormFields);
+  const [showError, setShowError] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked, type } = e.target;
@@ -89,11 +96,12 @@ const RSVP = ({
   };
 
   const handleRSVPSubmit = debounce(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+    async (e?: React.FormEvent<HTMLFormElement>) => {
+      //  e.preventDefault();
       try {
-        if (currentVerifiedCode === null) throw new Error("No User detected");
-        const updatedVerifiedCode = currentVerifiedCode;
+        if (currentVerifiedCode === null)
+          throw new Error("Code is not verified.");
+        const updatedVerifiedCode = cloneDeep(currentVerifiedCode);
         const { invitedNames, kids, plusOne } = updatedVerifiedCode;
 
         // Loop through the confirmed and update accepted field accordingly
@@ -150,29 +158,28 @@ const RSVP = ({
           }
         }
 
-        updatedVerifiedCode.submit = {
-          submittedOn: new Date(),
-          submitted: true,
-        };
-
         if (formFields.message && formFields.message.trim() !== "") {
           updatedVerifiedCode.message = formFields.message;
         }
-        await submitRSVPToFirebase(
+
+        await submitRSVP(
           updatedVerifiedCode,
           formFields.confirmed,
           formFields.denied
         );
-
-        console.log("RSVP Submitted");
-
+        setShowConfirm(false);
         setCloseRSVP();
       } catch (error) {
-        console.error("Handle submit error", error);
+        setShowError(true);
+        console.error("Handle submit", error);
       }
     },
     1000
   );
+
+  const handleConfirm = () => {
+    setShowConfirm(true);
+  };
 
   const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -191,13 +198,7 @@ const RSVP = ({
     <div className="rsvpForm">
       {currentVerifiedCode ? (
         <>
-          <form
-            onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
-              e.preventDefault();
-              //TODO ADD A CONFIRMATION WARNING
-              await handleRSVPSubmit(e);
-            }}
-          >
+          <div>
             <div className="rsvpFormTitles">
               <h3 className="rsvpFormTitles">YOU'RE INVITED TO</h3>
               <h2>SARA & CLARK'S WEDDING</h2>
@@ -283,15 +284,64 @@ const RSVP = ({
               />
             </div>
             <div className="rsvpButtonContainer">
-              <button type="submit" className="rsvpFormSubmit">
-                Submit
+              <button onClick={handleConfirm} className="rsvpFormSubmit">
+                SUBMIT
               </button>
             </div>
-          </form>
+          </div>
         </>
       ) : (
-        <div>No User Detected</div>
+        <Popup
+          open={!currentVerifiedCode}
+          onClose={setCloseRSVP}
+          closeOnDocumentClick
+          className="errorPopup"
+        >
+          <ErrorComponent
+            error={{
+              title: "Code is not verified.",
+              message: "Wow you must be a hacker to get here.",
+            }}
+            closeForm={setCloseRSVP}
+          />
+        </Popup>
       )}
+      <Popup
+        open={showError}
+        onClose={() => setShowError(false)}
+        closeOnDocumentClick
+        className="errorPopup"
+      >
+        <ErrorComponent error={error} closeForm={() => setShowError(false)} />
+      </Popup>
+      <Popup
+        open={showConfirm}
+        onClose={() => setShowConfirm(false)}
+        closeOnDocumentClick
+        className="confirmPopup"
+      >
+        <div className="confirmContainer">
+          <div className="confirmTitle">Ready to Submit?</div>
+          <div className="confirmMessage">
+            Please ensure everyone in your invite is accounted for.
+          </div>
+          <div className="confirmButtonContainer">
+            <button
+              className="confirmClose"
+              onClick={() => setShowConfirm(false)}
+            >
+              CLOSE
+            </button>
+            <button
+              className="confirmSubmit"
+              type="submit"
+              onClick={() => handleRSVPSubmit()}
+            >
+              SUBMIT
+            </button>
+          </div>
+        </div>
+      </Popup>
     </div>
   );
 };
