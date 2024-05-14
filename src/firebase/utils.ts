@@ -214,7 +214,16 @@ export const submitRSVPToFirebase = async (
 ) => {
   return new Promise<VerifiedCode>(async (resolve, reject) => {
     try {
-      if (verifiedCode == null) throw new Error("No Code Detected");
+      if (verifiedCode == null) throw new Error("No Code Detected!");
+      const existingCode = await verifyInviteCode(verifiedCode.inviteCode);
+
+      if (!existingCode)
+        throw new Error(
+          "Invite code does not exist or does not match anyone on our invite list."
+        );
+      if (existingCode.submit && existingCode.submit.submitted)
+        throw new Error(`Looks like someone used your code before you did!`);
+
       const rsvpDocRef = await doc(db, "rsvp", "rsvp"); //db collection docId
       const rsvpSnapshot = await getDoc(rsvpDocRef);
 

@@ -199,14 +199,16 @@ const RSVP = ({
       {currentVerifiedCode ? (
         <>
           <div>
-            <div className="rsvpFormTitles">
-              <h3 className="rsvpFormTitles">YOU'RE INVITED TO</h3>
-              <h2>SARA & CLARK'S WEDDING</h2>
-              <h5>Kindly RSVP by the 12th of August</h5>
+            <div className="rsvpFormTitlesContainer">
+              <div className="rsvpFormTitles1">YOU'RE INVITED TO</div>
+              <div className="rsvpFormTitles2">Sara & Clark's Wedding</div>
+              <div className="rsvpFormTitles3">
+                Kindly RSVP by the 12th of August
+              </div>
             </div>
 
             <div className="guestContainer">
-              <h3>Will you be attending?</h3>
+              <div className="rsvpFormTitles3">Will you be attending?</div>
               {currentVerifiedCode.invitedNames?.length &&
                 currentVerifiedCode.invitedNames.map(
                   (invitee: InvitedNames) => {
@@ -224,9 +226,9 @@ const RSVP = ({
                   }
                 )}
               {currentVerifiedCode.kids.allowKids && (
-                <h5>
+                <div className="rsvpFormTitles3">
                   We love your kids! We'd love for them to be there as well!
-                </h5>
+                </div>
               )}
               {/* ENSURE ONLY 1 INVITEE HAS ARRAY OF KIDS */}
               {currentVerifiedCode.kids &&
@@ -248,7 +250,9 @@ const RSVP = ({
             </div>
             {currentVerifiedCode.plusOne?.allow && (
               <div className="guestContainer">
-                <h5>Oh look at that, You get to bring a plus one!</h5>
+                <div className="rsvpFormTitles3">
+                  Oh look at that, You get to bring a plus one!
+                </div>
                 <div className="rsvpFormLine plusOne">
                   <span>Would you like to bring a guest?</span>
                   <ToggleSwitch
@@ -274,9 +278,9 @@ const RSVP = ({
               </div>
             )}
             <div className="guestContainer message">
-              <h4>
+              <div className="rsvpFormTitles3">
                 Leave a message for the Bride and Groom <span>(optional).</span>
-              </h4>
+              </div>
               <textarea
                 name="message"
                 value={formFields.message}

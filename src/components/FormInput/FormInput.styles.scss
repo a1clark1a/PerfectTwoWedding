@@ -1,6 +1,11 @@
 .inputContainer {
   display: flex;
   flex-direction: column;
+
+  input {
+    font-family: "nimbus-sans", sans-serif;
+    font-size: 16px;
+  }
 }
 
 .label {
