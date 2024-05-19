@@ -1,27 +1,69 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import "./Navigation.style.scss";
 
-import { signOutUser } from "../../firebase/utils";
-import { UserContext } from "../../context/user.context";
+const Navigation = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isOpen, setIsOpen] = useState(false);
 
-import "./navigation.style.scss";
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
 
-const Navigation = (): React.JSX.Element => {
-  const { setCurrentUser } = useContext(UserContext);
-  const navigate = useNavigate();
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
-  // TODO fix navbar
-  const mobileView = () => {
-    return (
-      <nav className="navbar">
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <nav className="navbar">
+      {isMobile ? (
         <div className="navbar-container container">
-          <input type="checkbox" name="" id="" />
-          <div className="hamburger-lines">
+          <input
+            type="checkbox"
+            id="menu-checkbox"
+            checked={isOpen}
+            onChange={toggleMenu}
+          />
+          <div className="hamburger-lines" onClick={toggleMenu}>
             <span className="line line1"></span>
             <span className="line line2"></span>
             <span className="line line3"></span>
           </div>
-          <ul className="menu-items">
+          <ul className={`menu-items ${isOpen ? "open" : ""}`}>
+            <li>
+              <a href="#theDetails" onClick={() => setIsOpen(false)}>
+                THE DETAILS
+              </a>
+            </li>
+            <li>
+              <a href="#travelGuide" onClick={() => setIsOpen(false)}>
+                TRAVEL GUIDE
+              </a>
+            </li>
+            <li>
+              <a href="#memoryLane" onClick={() => setIsOpen(false)}>
+                MEMORY LANE
+              </a>
+            </li>
+            <li>
+              <a href="#FAQs" onClick={() => setIsOpen(false)}>
+                FAQs
+              </a>
+            </li>
+            <li>
+              <a href="#honeymoonGift">HONEYMOON GIFT</a>
+            </li>
+          </ul>
+        </div>
+      ) : (
+        <div className="desktopMenu">
+          <ul className="desktopMenuItems">
             <li>
               <a href="#theDetails">THE DETAILS</a>
             </li>
@@ -39,46 +81,9 @@ const Navigation = (): React.JSX.Element => {
             </li>
           </ul>
         </div>
-      </nav>
-    );
-  };
-
-  const desktopView = () => {
-    return (
-      <nav>
-        <ul>
-          <li>
-            <a href="#memoryLane">MEMORY LANE</a>
-          </li>
-          <li>
-            <a href="#theDetails">THE DETAILS</a>
-          </li>
-          <li>
-            <a href="#travelGuide">TRAVEL GUIDE</a>
-          </li>
-          <li>
-            <a href="#FAQs">FAQs</a>
-          </li>
-          <li>
-            <a href="#honeymoonGift">HONEYMOON GIFT</a>
-          </li>
-        </ul>
-        <div>
-          {/* <button
-          onClick={async () => {
-            setCurrentUser(null);
-            await signOutUser();
-            navigate("/");
-          }}
-        >
-          Logout
-        </button> */}
-        </div>
-      </nav>
-    );
-  };
-
-  return true && mobileView();
+      )}
+    </nav>
+  );
 };
 
 export default Navigation;

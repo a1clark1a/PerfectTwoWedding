@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "../../components/Navigation/navigation.component";
+import Navigation from "../../components/Navigation/Navigation.component";
 
 const NavigationRoute = (): React.JSX.Element => {
   return <Navigation />;
