@@ -8,7 +8,7 @@ import FAQ from "../../components/FAQ/FAQ.component";
 import TravelGuide from "../../components/TravelGuide/TravelGuide.component";
 import Details from "../../components/Details/Details.component";
 import Footnote from "../../components/Footnote/Footnote.component";
-import Navigation from "../../components/Navigation/navigation.component";
+import Navigation from "../../components/Navigation/Navigation.component";
 
 const HomeRoute = (): React.JSX.Element => {
   return (
