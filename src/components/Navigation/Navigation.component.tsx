@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Navigation.style.scss";
+import "./Navigation.styles.scss";
 
 const Navigation = (): React.JSX.Element => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
