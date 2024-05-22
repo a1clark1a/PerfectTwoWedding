@@ -76,3 +76,15 @@
   flex-direction: column;
   align-items: center;
 }
+
+.fullPage {
+  height: 100vh;
+
+  h3 {
+    font-size: 80px;
+  }
+
+  h4 {
+    padding: 0 10px;
+  }
+}

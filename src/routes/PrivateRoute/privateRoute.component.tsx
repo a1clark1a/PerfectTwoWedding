@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { UserContext } from "../../context/user.context";
+import { VerifiedCodeContext } from "../../context/verifiedCode.context";
 
 const PrivateRoute: React.FC<{ children: any }> = ({ children }) => {
-  const { currentUser } = useContext(UserContext);
+  const { currentVerifiedCode } = useContext(VerifiedCodeContext);
 
-  return currentUser ? children : <Navigate to="/" />;
+  return currentVerifiedCode ? children : <Navigate to="/" />;
 };
 
 export default PrivateRoute;

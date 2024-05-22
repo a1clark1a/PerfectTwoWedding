@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import ScrollToTop from "react-scroll-to-top";
 
 // components
@@ -10,9 +9,11 @@ import Details from "../../components/Details/Details.component";
 import Footnote from "../../components/Footnote/Footnote.component";
 import Navigation from "../../components/Navigation/Navigation.component";
 
+import backgroundImage from "../../images/background-02-01-01.jpg";
+
 const HomeRoute = (): React.JSX.Element => {
   return (
-    <Fragment>
+    <div style={{ backgroundImage: `url(${backgroundImage})` }}>
       <Navigation />
       <HomePage />
       <Details />
@@ -29,7 +30,7 @@ const HomeRoute = (): React.JSX.Element => {
           alignItems: "center",
         }}
       />
-    </Fragment>
+    </div>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
 
 import FormInput from "../FormInput/index.component";
@@ -8,10 +9,17 @@ import { VerifiedCodeContext } from "../../context/verifiedCode.context";
 
 import "./InviteCodeForm.styles.scss";
 
-const InviteCodeForm = ({ closeForm }: { closeForm?: () => void }) => {
+const InviteCodeForm = ({
+  closeForm,
+  isFullPage,
+}: {
+  closeForm?: () => void;
+  isFullPage?: boolean;
+}) => {
   const [showError, setShowError] = useState<boolean>(false);
   const { getCode, inviteCode, setInviteCode, error } =
     useContext(VerifiedCodeContext);
+  const navigate = useNavigate();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newCode = e.target.value;
@@ -24,7 +32,7 @@ const InviteCodeForm = ({ closeForm }: { closeForm?: () => void }) => {
 
     try {
       await getCode();
-
+      isFullPage && navigate("/home");
       closeForm && closeForm();
     } catch (err) {
       setTimeout(() => {
@@ -35,7 +43,10 @@ const InviteCodeForm = ({ closeForm }: { closeForm?: () => void }) => {
 
   return (
     <>
-      <form onSubmit={handleInviteCode} className="inviteCodeForm">
+      <form
+        onSubmit={handleInviteCode}
+        className={`inviteCodeForm ${isFullPage ? "fullPage" : ""}`}
+      >
         <div className="inviteTitleContainer">
           <h3>Welcome!</h3>
           <h4>TO SARA & CLARK'S WEDDING</h4>
@@ -58,11 +69,13 @@ const InviteCodeForm = ({ closeForm }: { closeForm?: () => void }) => {
           <button type="submit">Enter</button>
         </div>
       </form>
-      <div className="modal">
-        <button className="close" onClick={closeForm}>
-          &times;
-        </button>
-      </div>
+      {!isFullPage && (
+        <div className="modal">
+          <button className="close" onClick={closeForm}>
+            &times;
+          </button>
+        </div>
+      )}
       <Popup
         open={showError}
         onClose={() => {

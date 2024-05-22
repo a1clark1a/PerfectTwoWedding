@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { submitRSVPToFirebase, verifyInviteCode } from "../firebase/utils";
 
@@ -28,11 +29,34 @@ export const VerifiedCodeProvider = ({
     useState<VerifiedCode | null>(null);
   const [inviteCode, setInviteCode] = useState("");
   const [error, setError] = useState({ title: "", message: "" });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedCode = sessionStorage.getItem("inviteCode");
+    if (storedCode) {
+      setInviteCode(storedCode);
+    }
+
+    async function verifyCode() {
+      try {
+        await verifyInviteCode(inviteCode);
+        navigate("/home");
+      } catch (e: any) {
+        setError({ title: "Code Expired", message: e.message });
+        // cleanup
+        setCurrentVerifiedCode(null);
+        sessionStorage.removeItem("inviteCode");
+      }
+    }
+
+    storedCode && verifyCode();
+  }, [inviteCode, navigate]);
 
   const getCode = () => {
     return new Promise<void>((resolve, reject) => {
       verifyInviteCode(inviteCode)
         .then((resp) => {
+          sessionStorage.setItem("inviteCode", inviteCode);
           setCurrentVerifiedCode(resp);
           resolve();
         })
