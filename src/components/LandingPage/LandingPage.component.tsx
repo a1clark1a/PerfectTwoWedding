@@ -1,25 +1,17 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
+
+import { VerifiedCodeContext } from "../../context/verifiedCode.context";
 
 import FormInput from "../FormInput/index.component";
 import ErrorComponent from "../Error/Error.component";
 
-import { VerifiedCodeContext } from "../../context/verifiedCode.context";
+import "./LandingPage.styles.scss";
 
-import "./InviteCodeForm.styles.scss";
-
-const InviteCodeForm = ({
-  closeForm,
-  isFullPage,
-}: {
-  closeForm?: () => void;
-  isFullPage?: boolean;
-}) => {
+const LandingPage = (): React.JSX.Element => {
   const [showError, setShowError] = useState<boolean>(false);
   const { getCode, inviteCode, setInviteCode, error } =
     useContext(VerifiedCodeContext);
-  const navigate = useNavigate();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newCode = e.target.value;
@@ -32,8 +24,8 @@ const InviteCodeForm = ({
 
     try {
       await getCode();
-      isFullPage && navigate("/home");
-      closeForm && closeForm();
+
+      //   closeForm && closeForm();
     } catch (err) {
       setTimeout(() => {
         setShowError(true);
@@ -43,10 +35,7 @@ const InviteCodeForm = ({
 
   return (
     <>
-      <form
-        onSubmit={handleInviteCode}
-        className={`inviteCodeForm ${isFullPage ? "fullPage" : ""}`}
-      >
+      <form onSubmit={handleInviteCode} className="inviteCodeForm">
         <div className="inviteTitleContainer">
           <h3>Welcome!</h3>
           <h4>TO SARA & CLARK'S WEDDING</h4>
@@ -69,13 +58,6 @@ const InviteCodeForm = ({
           <button type="submit">Enter</button>
         </div>
       </form>
-      {!isFullPage && (
-        <div className="modal">
-          <button className="close" onClick={closeForm}>
-            &times;
-          </button>
-        </div>
-      )}
       <Popup
         open={showError}
         onClose={() => {
@@ -90,4 +72,4 @@ const InviteCodeForm = ({
   );
 };
 
-export default InviteCodeForm;
+export default LandingPage;
