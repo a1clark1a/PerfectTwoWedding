@@ -128,6 +128,9 @@
   background-image: url("../../images/background-02-01-01.jpg");
 }
 
+.errorPopup-content {
+  min-height: 350px;
+}
 .errorPopup-content,
 .confirmPopup-content {
   display: block;

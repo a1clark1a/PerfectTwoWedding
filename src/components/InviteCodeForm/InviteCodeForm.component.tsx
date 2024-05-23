@@ -8,6 +8,7 @@ import ErrorComponent from "../Error/Error.component";
 import { VerifiedCodeContext } from "../../context/verifiedCode.context";
 
 import "./InviteCodeForm.styles.scss";
+import logo from "../../images/logo.png";
 
 const InviteCodeForm = ({
   closeForm,
@@ -21,9 +22,20 @@ const InviteCodeForm = ({
     useContext(VerifiedCodeContext);
   const navigate = useNavigate();
 
+  const validateInput = (input: string) => {
+    const pattern = /^[A-Za-z0-9&]*$/; // Allow only alphanumeric and "&" symbol
+    if (input.length > 20) {
+      return false;
+    }
+    if (!pattern.test(input)) {
+      return false;
+    }
+    return true;
+  };
+
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newCode = e.target.value;
-    setInviteCode(newCode);
+    validateInput(newCode) && setInviteCode(newCode);
     setShowError(false);
   };
 
@@ -42,11 +54,21 @@ const InviteCodeForm = ({
   };
 
   return (
-    <>
+    <div>
       <form
         onSubmit={handleInviteCode}
         className={`inviteCodeForm ${isFullPage ? "fullPage" : ""}`}
       >
+        {isFullPage && (
+          <div className="imgContainer">
+            <img
+              src={logo ? logo : "https://fakeimg.pl/300x300?text=i+broke"}
+              sizes=""
+              alt="logo"
+              className="logoImage"
+            />
+          </div>
+        )}
         <div className="inviteTitleContainer">
           <h3>Welcome!</h3>
           <h4>TO SARA & CLARK'S WEDDING</h4>
@@ -86,7 +108,7 @@ const InviteCodeForm = ({
       >
         <ErrorComponent error={error} closeForm={() => setShowError(false)} />
       </Popup>
-    </>
+    </div>
   );
 };
 

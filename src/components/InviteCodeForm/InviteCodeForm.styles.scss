@@ -79,7 +79,7 @@
 
 .fullPage {
   height: 100vh;
-
+  justify-content: flex-start;
   h3 {
     font-size: 80px;
   }
@@ -87,4 +87,8 @@
   h4 {
     padding: 0 10px;
   }
+}
+
+.imgContainer {
+  padding-top: 50px;
 }
