@@ -19,7 +19,7 @@ const FAQ = (): React.JSX.Element => {
       description: (
         <>
           <span>
-            - Smoking is prohibited in the Park. A designated smoking area is
+            - Smoking is prohibited in the park. A designated smoking area is
             located in the parking lot. Please respect the venue and the forest
             around you.
             <br></br>

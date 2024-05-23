@@ -53,7 +53,7 @@ const Details = (): React.JSX.Element => {
             img={cocktailHourImg}
             children={
               <div className="cardChildren">
-                <div>Cocktail hour</div>
+                <div>Cocktail Hour</div>
                 <span>
                   Sign our guest book and pin your location on our world map,
                   for the newlyweds' next adventure!
@@ -85,7 +85,7 @@ const Details = (): React.JSX.Element => {
             img={receptionHourImg}
             children={
               <div className="cardChildren">
-                <div>Reception to follow cocktail hour</div>
+                <div>Reception to follow Cocktail Hour</div>
                 <span>Reception ends at 8pm</span>
                 <span>
                   Enjoy a delightful dinner and indulge in our exquisite

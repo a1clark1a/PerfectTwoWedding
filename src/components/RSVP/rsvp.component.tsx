@@ -31,7 +31,7 @@ const RSVP = ({
 }: {
   setCloseRSVP: () => void;
 }): React.JSX.Element => {
-  const { currentVerifiedCode, submitRSVP, error } =
+  const { currentVerifiedCode, submitRSVP, error, setError } =
     useContext(VerifiedCodeContext);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const [showError, setShowError] = useState(false);
@@ -100,7 +100,11 @@ const RSVP = ({
       //  e.preventDefault();
       try {
         if (currentVerifiedCode === null)
-          throw new Error("Code is not verified.");
+          throw setError({
+            title: "Invalid Code",
+            message: "Code is not verified.",
+          });
+
         const updatedVerifiedCode = cloneDeep(currentVerifiedCode);
         const { invitedNames, kids, plusOne } = updatedVerifiedCode;
 
@@ -150,6 +154,13 @@ const RSVP = ({
 
         // check for plus one
         if (plusOne?.allow && formFields.addPlusOne) {
+          if (!formFields.plusOneName) {
+            throw setError({
+              title: "No Guest Name",
+              message:
+                "If you would like to bring a plus one. Please fill guest name",
+            });
+          }
           formFields.confirmed.push(formFields.plusOneName);
 
           if (plusOne?.allow) {
@@ -171,7 +182,7 @@ const RSVP = ({
         setCloseRSVP();
       } catch (error) {
         setShowError(true);
-        console.error("Handle submit", error);
+        // console.error("Handle submit", error);
       }
     },
     1000
