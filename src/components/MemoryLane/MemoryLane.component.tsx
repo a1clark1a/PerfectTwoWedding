@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PhotoAlbum from "react-photo-album";
 import Lightbox from "yet-another-react-lightbox";
+import YouTube from "react-youtube";
 
 import Card from "../Card/Card.component";
 
@@ -14,8 +15,22 @@ import memoriesWithYouImg from "../../images/withguests.jpg";
 
 const MemoryLane = (): React.JSX.Element => {
   const [index, setIndex] = useState<number>(-1);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
   const { images, getImages, imagesLoading, setImagesLoading } =
     useContext(ImagesContext);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 767);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <section id="memoryLane" className="memoryLaneSection">
@@ -36,6 +51,20 @@ const MemoryLane = (): React.JSX.Element => {
               </div>
             ) : (
               <>
+                <div className="videoContainer">
+                  <YouTube
+                    videoId={"b2O2MwYVHkQ"}
+                    opts={{
+                      width: isMobile ? 320 : 700,
+                      height: 390,
+                      playerVars: {
+                        autoplay: 0,
+                        rel: 0,
+                      },
+                    }}
+                  />
+                </div>
+
                 <PhotoAlbum
                   layout="masonry"
                   columns={(containerWidth) => {

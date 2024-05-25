@@ -54,7 +54,7 @@ const HomePage = (): React.JSX.Element => {
       <Popup
         open={openModal}
         position="right center"
-        closeOnDocumentClick
+        closeOnDocumentClick={false}
         onClose={closeRSVPForm}
         nested
         className={!currentVerifiedCode ? "rsvpPopup" : "rsvpFormPopup"}

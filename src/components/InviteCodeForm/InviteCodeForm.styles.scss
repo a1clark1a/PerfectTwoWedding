@@ -6,19 +6,6 @@
   text-align: center;
   min-height: 500px;
   background-color: #f7f3f0;
-
-  .inviteFormInput {
-    padding: 5px 10px;
-    font-size: 16px;
-  }
-
-  .inviteFormInput-label {
-    font-family: "kepler-std-display", serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 18px;
-  }
-
   button {
     margin-top: 10px;
     width: 100%;
@@ -35,40 +22,65 @@
     line-height: 24px;
     color: #1b1c1e;
   }
+}
 
-  h3 {
-    font-family: "la-bohemienne", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    font-size: 67px;
-    color: #1b1c1e;
-    margin: 0;
-  }
+.inviteFormInput {
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #1b1c1e;
+  border-width: 1px;
+}
 
-  h4 {
-    font-family: "kepler-std-display", serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 25px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
-  }
+.inviteFormInput-label {
+  font-family: "kepler-std", serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 16px;
+  letter-spacing: 2px;
+  min-width: 250px;
+  color: #1b1c1e;
+}
 
-  h6 {
-    font-family: "kepler-std-display", serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 16px;
-    margin-top: 0px;
-    letter-spacing: 2px;
-    text-align: center;
-    width: 60%;
-  }
+h3 {
+  font-family: "la-bohemienne", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 67px;
+  color: #1b1c1e;
+  margin: 0;
+}
+
+h4 {
+  font-family: "kepler-std", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  color: #1b1c1e;
+}
+
+h6 {
+  font-family: "kepler-std", serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 16px;
+  margin-top: 0px;
+  letter-spacing: 2px;
+  text-align: center;
+  width: 60%;
+  min-width: 250px;
+  color: #1b1c1e;
 }
 
 .inviteInputContainer {
-  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .inviteTitleContainer {
@@ -80,8 +92,11 @@
 .fullPage {
   height: 100vh;
   justify-content: flex-start;
+  //background-color: #48151b;
+  //color: #fafafa;
   h3 {
     font-size: 80px;
+    // color: #fafafa;
   }
 
   h4 {

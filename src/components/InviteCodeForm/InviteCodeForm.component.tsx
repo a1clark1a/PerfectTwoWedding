@@ -76,7 +76,7 @@ const InviteCodeForm = ({
         </div>
         <div className="inviteInputContainer">
           <FormInput
-            label="Please enter your one of a kind Code"
+            label="Please enter your one of a kind code"
             inputOptions={{
               type: "text",
               onChange: handleInput,
