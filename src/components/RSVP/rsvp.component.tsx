@@ -361,6 +361,7 @@ const RSVP = ({
             <button
               className={`confirmSubmit ${loading ? "buttonDisabled" : ""}`}
               type="submit"
+              disabled={loading}
               onClick={() => handleRSVPSubmit()}
             >
               SUBMIT
