@@ -200,6 +200,11 @@
   background: transparent;
 }
 
+.loadingPopup-content {
+  background: none;
+  border: none;
+}
+
 @media screen and (max-width: 747px) {
   .rsvpFormPopup-content {
     width: 90%;
