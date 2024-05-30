@@ -22,6 +22,10 @@
     line-height: 24px;
     color: #1b1c1e;
   }
+  .buttonDisabled {
+    background-color: #b1b0af;
+    cursor: not-allowed;
+  }
 }
 
 .inviteFormInput {

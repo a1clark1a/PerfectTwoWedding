@@ -11,6 +11,7 @@ import ErrorComponent from "../Error/Error.component";
 
 import "./rsvp.styles.scss";
 import Popup from "reactjs-popup";
+import Loading from "../Loading/Loading.component";
 
 const defaultFormFields = {
   confirmed: [],
@@ -26,6 +27,13 @@ const defaultFormFields = {
   message: string;
 };
 
+interface DefaultFormFields {
+  confirmed: string[];
+  denied: string[];
+  plusOneName: string;
+  addPlusOne: boolean;
+  message: string;
+}
 const RSVP = ({
   setCloseRSVP,
 }: {
@@ -33,9 +41,11 @@ const RSVP = ({
 }): React.JSX.Element => {
   const { currentVerifiedCode, submitRSVP, error, setError } =
     useContext(VerifiedCodeContext);
-  const [formFields, setFormFields] = useState(defaultFormFields);
-  const [showError, setShowError] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [formFields, setFormFields] =
+    useState<DefaultFormFields>(defaultFormFields);
+  const [showError, setShowError] = useState<boolean>(false);
+  const [showConfirm, setShowConfirm] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked, type } = e.target;
@@ -95,98 +105,98 @@ const RSVP = ({
     });
   };
 
-  const handleRSVPSubmit = debounce(
-    async (e?: React.FormEvent<HTMLFormElement>) => {
-      //  e.preventDefault();
-      try {
-        if (currentVerifiedCode === null)
-          throw setError({
-            title: "Invalid Code",
-            message: "Code is not verified.",
-          });
-
-        const updatedVerifiedCode = cloneDeep(currentVerifiedCode);
-        const { invitedNames, kids, plusOne } = updatedVerifiedCode;
-
-        // Loop through the confirmed and update accepted field accordingly
-        formFields.confirmed.forEach((name) => {
-          invitedNames.forEach((invitee) => {
-            if (invitee.name === name) {
-              invitee.accepted = true;
-              return;
-            }
-          });
-
-          if (kids.allowKids) {
-            kids.kidsNames?.length &&
-              kids.kidsNames.forEach((kid) => {
-                if (kid.name === name) {
-                  kid.accepted = true;
-                }
-              });
-          }
+  const handleRSVPSubmit = debounce(async () => {
+    setLoading(true);
+    try {
+      if (currentVerifiedCode === null)
+        throw setError({
+          title: "Invalid Code",
+          message: "Code is not verified.",
         });
 
-        // clean and filter confirmed and denied list to ensure invitees are put in denied appropriately
+      const updatedVerifiedCode = cloneDeep(currentVerifiedCode);
+      const { invitedNames, kids, plusOne } = updatedVerifiedCode;
+
+      // Loop through the confirmed and update accepted field accordingly
+      formFields.confirmed.forEach((name) => {
         invitedNames.forEach((invitee) => {
-          // check if invitee said no and if their name is not on denied add them to denied
-          if (!invitee.accepted && !formFields.denied.includes(invitee.name))
-            formFields.denied.push(invitee.name);
-          // check if invitee accepted but was not included to the confirmed then add to confirmed
-          else if (
-            invitee.accepted &&
-            !formFields.confirmed.includes(invitee.name)
-          )
-            formFields.confirmed.push(invitee.name);
+          if (invitee.name === name) {
+            invitee.accepted = true;
+            return;
+          }
         });
 
-        // check if kids is not on confirmed and is not yet added to denied add them to denied
-        kids?.kidsNames?.forEach((kid) => {
-          if (
-            !formFields.confirmed.includes(kid.name) &&
-            !formFields.denied.includes(kid.name)
-          )
-            formFields.denied.push(kid.name);
-          // check if kid accepted but was not included to the confirmed then add to confirmed
-          else if (kid.accepted && !formFields.confirmed.includes(kid.name))
-            formFields.confirmed.push(kid.name);
-        });
-
-        // check for plus one
-        if (plusOne?.allow && formFields.addPlusOne) {
-          if (!formFields.plusOneName) {
-            throw setError({
-              title: "No Guest Name",
-              message:
-                "If you would like to bring a plus one. Please fill guest name",
+        if (kids.allowKids) {
+          kids.kidsNames?.length &&
+            kids.kidsNames.forEach((kid) => {
+              if (kid.name === name) {
+                kid.accepted = true;
+              }
             });
-          }
-          formFields.confirmed.push(formFields.plusOneName);
-
-          if (plusOne?.allow) {
-            plusOne.name = formFields.plusOneName;
-            plusOne.accepted = true;
-          }
         }
+      });
 
-        if (formFields.message && formFields.message.trim() !== "") {
-          updatedVerifiedCode.message = formFields.message;
+      // clean and filter confirmed and denied list to ensure invitees are put in denied appropriately
+      invitedNames.forEach((invitee) => {
+        // check if invitee said no and if their name is not on denied add them to denied
+        if (!invitee.accepted && !formFields.denied.includes(invitee.name))
+          formFields.denied.push(invitee.name);
+        // check if invitee accepted but was not included to the confirmed then add to confirmed
+        else if (
+          invitee.accepted &&
+          !formFields.confirmed.includes(invitee.name)
+        )
+          formFields.confirmed.push(invitee.name);
+      });
+
+      // check if kids is not on confirmed and is not yet added to denied add them to denied
+      kids?.kidsNames?.forEach((kid) => {
+        if (
+          !formFields.confirmed.includes(kid.name) &&
+          !formFields.denied.includes(kid.name)
+        )
+          formFields.denied.push(kid.name);
+        // check if kid accepted but was not included to the confirmed then add to confirmed
+        else if (kid.accepted && !formFields.confirmed.includes(kid.name))
+          formFields.confirmed.push(kid.name);
+      });
+
+      // check for plus one
+      if (plusOne?.allow && formFields.addPlusOne) {
+        if (!formFields.plusOneName) {
+          throw setError({
+            title: "No Guest Name",
+            message:
+              "If you would like to bring a plus one. Please fill guest name",
+          });
         }
+        formFields.confirmed.push(formFields.plusOneName);
 
-        await submitRSVP(
-          updatedVerifiedCode,
-          formFields.confirmed,
-          formFields.denied
-        );
-        setShowConfirm(false);
-        setCloseRSVP();
-      } catch (error) {
-        setShowError(true);
-        // console.error("Handle submit", error);
+        if (plusOne?.allow) {
+          plusOne.name = formFields.plusOneName;
+          plusOne.accepted = true;
+        }
       }
-    },
-    1000
-  );
+
+      if (formFields.message && formFields.message.trim() !== "") {
+        updatedVerifiedCode.message = formFields.message;
+      }
+
+      await submitRSVP(
+        updatedVerifiedCode,
+        formFields.confirmed,
+        formFields.denied
+      );
+
+      setLoading(false);
+      setShowConfirm(false);
+      setCloseRSVP();
+    } catch (error) {
+      setLoading(false);
+      setShowError(true);
+      // console.error("Handle submit", error);
+    }
+  }, 1000);
 
   const handleConfirm = () => {
     setShowConfirm(true);
@@ -321,6 +331,7 @@ const RSVP = ({
           />
         </Popup>
       )}
+      <Loading loading={loading} />
       <Popup
         open={showError}
         onClose={() => setShowError(false)}
@@ -348,7 +359,7 @@ const RSVP = ({
               CLOSE
             </button>
             <button
-              className="confirmSubmit"
+              className={`confirmSubmit ${loading ? "buttonDisabled" : ""}`}
               type="submit"
               onClick={() => handleRSVPSubmit()}
             >

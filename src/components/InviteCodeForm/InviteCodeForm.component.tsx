@@ -9,6 +9,7 @@ import { VerifiedCodeContext } from "../../context/verifiedCode.context";
 
 import "./InviteCodeForm.styles.scss";
 import logo from "../../images/logo.png";
+import Loading from "../Loading/Loading.component";
 
 const InviteCodeForm = ({
   closeForm,
@@ -18,6 +19,7 @@ const InviteCodeForm = ({
   isFullPage?: boolean;
 }) => {
   const [showError, setShowError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const { getCode, inviteCode, setInviteCode, error } =
     useContext(VerifiedCodeContext);
   const navigate = useNavigate();
@@ -41,15 +43,23 @@ const InviteCodeForm = ({
 
   const handleInviteCode = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       await getCode();
-      isFullPage && navigate("/home");
+
+      // setLoading(false);
+      // for small version
       closeForm && closeForm();
-    } catch (err) {
+
+      // for landing page
       setTimeout(() => {
-        setShowError(true);
-      }, 500);
+        setLoading(false);
+        isFullPage && navigate("/home");
+      }, 1000);
+    } catch (err) {
+      setLoading(false);
+      setShowError(true);
     }
   };
 
@@ -88,7 +98,13 @@ const InviteCodeForm = ({
               className: "inviteFormInput",
             }}
           />
-          <button type="submit">Enter</button>
+          <button
+            type="submit"
+            disabled={loading}
+            className={loading ? "buttonDisabled" : ""}
+          >
+            Enter
+          </button>
         </div>
       </form>
       {!isFullPage && (
@@ -98,6 +114,7 @@ const InviteCodeForm = ({
           </button>
         </div>
       )}
+      <Loading loading={loading} />
       <Popup
         open={showError}
         onClose={() => {
