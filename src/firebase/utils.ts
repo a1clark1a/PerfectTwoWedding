@@ -83,7 +83,7 @@ const updateGuestListInviteCode = async (inviteCode: string) => {
 // verify that invite code exists in db and matches any user
 export const verifyInviteCode = async (inviteCode: string) => {
   // get collection ref
-  const guestListsRef = await collection(db, "exampleData"); // change to guestLists for prod
+  const guestListsRef = await collection(db, "guestLists"); // change to guestLists for prod
 
   // create query to get document that matches inviteCode
   //const q = query(guestListsRef, where("inviteCode", "==", inviteCode));
@@ -253,11 +253,7 @@ export const submitRSVPToFirebase = async (
         });
 
         // change to guestLists
-        const guestListsDocRef = doc(
-          db,
-          "exampleData",
-          verifiedCode.inviteCode
-        ); //db collection docId
+        const guestListsDocRef = doc(db, "guestLists", verifiedCode.inviteCode); //db collection docId
 
         await setDoc(guestListsDocRef, verifiedCode);
         return resolve(verifiedCode);
@@ -279,7 +275,7 @@ export const submitRSVPToFirebase = async (
       // change to guestLists
       const guestListsDocRef = await doc(
         db,
-        "exampleData",
+        "guestLists",
         verifiedCode.inviteCode
       ); //db collection docId
 
