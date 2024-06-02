@@ -22,7 +22,7 @@
 }
 
 .loader__circle {
-  --size__loader: 0.8em;
+  --size__loader: 2em;
   width: var(--size__loader);
   height: var(--size__loader);
   border-radius: 50%;
@@ -71,4 +71,9 @@
   75% {
     transform: translateY(5px) scale(0.9);
   }
+}
+
+.loadingImg {
+  max-width: 100%;
+  height: auto;
 }

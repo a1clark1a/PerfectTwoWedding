@@ -48,7 +48,6 @@ const InviteCodeForm = ({
     try {
       await getCode();
 
-      // setLoading(false);
       // for small version
       closeForm && closeForm();
 
