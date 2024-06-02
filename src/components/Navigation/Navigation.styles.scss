@@ -173,6 +173,7 @@ nav {
   width: 100vw; // Make the navigation bar span the entire width of the browser
   min-height: 50px;
   top: 0; // Set the top position of the navigation bar
+  position: fixed; // Make the navigation bar fixed
 }
 
 .desktopMenuItems {
