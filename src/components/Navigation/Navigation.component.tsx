@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
+import Popup from "reactjs-popup";
+
 import "./Navigation.styles.scss";
+import HMFDesktop from "../../images/HMF_Print-2.jpg";
+import HMFMobile from "../../images/HMF_Print-mobile-01.jpg";
 
 const Navigation = (): React.JSX.Element => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isOpen, setIsOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 768);
@@ -57,7 +62,15 @@ const Navigation = (): React.JSX.Element => {
               </a>
             </li>
             <li>
-              <a href="#honeymoonGift">HONEYMOON GIFT</a>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              <a
+                onClick={() => {
+                  setIsOpen(false);
+                  setOpenModal(true);
+                }}
+              >
+                HONEYMOON GIFT
+              </a>
             </li>
           </ul>
         </div>
@@ -77,11 +90,31 @@ const Navigation = (): React.JSX.Element => {
               <a href="#FAQs">FAQs</a>
             </li>
             <li>
-              <a href="#honeymoonGift">HONEYMOON GIFT</a>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              <a onClick={() => setOpenModal(true)}>HONEYMOON GIFT</a>
             </li>
           </ul>
         </div>
       )}
+      <Popup
+        open={openModal}
+        onClose={() => {
+          setOpenModal(false);
+        }}
+        closeOnDocumentClick
+        className="hmfPopup"
+      >
+        <img
+          src={isMobile ? HMFMobile : HMFDesktop}
+          alt="Honeymoon Fund"
+          className="hmfImg"
+        />
+        <div className="modal">
+          <button className="close" onClick={() => setOpenModal(false)}>
+            &times;
+          </button>
+        </div>
+      </Popup>
     </nav>
   );
 };
