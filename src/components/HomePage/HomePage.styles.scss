@@ -220,8 +220,21 @@
   border: none;
 }
 
+.hmfPopup-content {
+  display: flex;
+  justify-content: center;
+  max-height: 100vh;
+}
+
 @media screen and (max-width: 747px) {
   .rsvpFormPopup-content {
     width: 90%;
+  }
+
+  .hmfPopup-content {
+    display: flex;
+    width: 100%;
+    max-height: 100%;
+    overflow: auto;
   }
 }
