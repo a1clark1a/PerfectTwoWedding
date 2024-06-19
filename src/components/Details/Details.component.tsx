@@ -38,8 +38,21 @@ const Details = (): React.JSX.Element => {
                 <span>Monday, September 23, 2024</span>
                 <hr />
                 <div>Ceremony & Reception</div>
-                <span>Sky Park</span>
-                <span>28950 Highway 18, Skyforest, CA 92385</span>
+                <a
+                  href="https://skyparksantasvillage.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Sky Park at Santa's Village
+                </a>
+                <a
+                  href="https://maps.app.goo.gl/1nuCHiukQNQqKt4C9"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  28950 Highway 18, Skyforest, CA 92385
+                </a>
+                <br></br>
                 <span>Time: 3pm - 8pm</span>
                 <hr />
                 <div>Attire</div>
