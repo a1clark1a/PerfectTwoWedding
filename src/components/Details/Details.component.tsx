@@ -54,6 +54,7 @@ const Details = (): React.JSX.Element => {
                 </a>
                 <br></br>
                 <span>Time: 3pm - 8pm</span>
+                <span>Please arrive before 2:30 pm</span>
                 <hr />
                 <div>Attire</div>
                 <span>Formal | Cocktail</span>
