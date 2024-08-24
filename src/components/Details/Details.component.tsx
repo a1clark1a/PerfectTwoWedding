@@ -81,6 +81,17 @@ const Details = (): React.JSX.Element => {
                   <span>
                     The Bride and Groom will each have their own specialty
                     drink!
+                    <br />
+                    <div>Groom Cocktail: Happy Ever Mule</div>
+                    <span>
+                      <i> By Victor Matsuyama</i>
+                    </span>
+                    <br />
+                    <div>Bride Cocktail: On Cloud 9</div>
+                    <span>
+                      <i> By Inga Tantisalidchai</i>
+                    </span>
+                    <br />
                   </span>
                 </span>
                 <hr></hr>
