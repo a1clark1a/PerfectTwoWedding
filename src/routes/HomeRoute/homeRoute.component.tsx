@@ -8,6 +8,7 @@ import TravelGuide from "../../components/TravelGuide/TravelGuide.component";
 import Details from "../../components/Details/Details.component";
 import Footnote from "../../components/Footnote/Footnote.component";
 import Navigation from "../../components/Navigation/Navigation.component";
+import VideoCorner from "../../components/VideoCorner/VideoCorner.component";
 
 import backgroundImage from "../../images/background-02-01-01.jpg";
 
@@ -16,6 +17,7 @@ const HomeRoute = (): React.JSX.Element => {
     <div style={{ backgroundImage: `url(${backgroundImage})` }}>
       <Navigation />
       <HomePage />
+      <VideoCorner />
       <Details />
       <TravelGuide />
       <MemoryLane />

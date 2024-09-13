@@ -42,6 +42,11 @@ const Navigation = (): React.JSX.Element => {
           </div>
           <ul className={`menu-items ${isOpen ? "open" : ""}`}>
             <li>
+              <a href="#loveStory" onClick={() => setIsOpen(false)}>
+                LOVE STORY
+              </a>
+            </li>
+            <li>
               <a href="#theDetails" onClick={() => setIsOpen(false)}>
                 THE DETAILS
               </a>
@@ -77,6 +82,11 @@ const Navigation = (): React.JSX.Element => {
       ) : (
         <div className="desktopMenu">
           <ul className="desktopMenuItems">
+            <li>
+              <a href="#loveStory" onClick={() => setIsOpen(false)}>
+                LOVE STORY
+              </a>
+            </li>
             <li>
               <a href="#theDetails">THE DETAILS</a>
             </li>
