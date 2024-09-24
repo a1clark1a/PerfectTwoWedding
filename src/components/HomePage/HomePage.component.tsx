@@ -10,7 +10,7 @@ import { VerifiedCodeContext } from "../../context/verifiedCode.context";
 import "reactjs-popup/dist/index.css";
 import "./HomePage.styles.scss";
 
-import mobileBackgroundImage1 from "../../images/SAR01109-02.jpg";
+import mobileBackgroundImage1 from "../../images/WeddingDay.jpg";
 
 const HomePage = (): React.JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
@@ -29,18 +29,26 @@ const HomePage = (): React.JSX.Element => {
       style={{ backgroundImage: `url(${mobileBackgroundImage1})` }}
     >
       <div className="homePageContainer">
-        <div className="content">
-          <CountDownClock />
-        </div>
+        <div className="content">{/*<CountDownClock /> */}</div>
         <div className="content">
           <span className="homePageTitleName">Sara & Clark</span>
         </div>
         <div className="content">
           <span className="homePageDate">
-            September 23, 2024 | Skyforest, CA
+            Thank you for sharing this wonderful moment with us! We can't wait
+            to share the pictures and videos!
           </span>
         </div>
-        <div className="content rsvpButtonContainer">
+        <div className="content">
+          <span className="homePageDate">
+            Please come back in a few weeks or wait for us to notify you when
+            Photos and Videos are uploaded.
+          </span>
+        </div>
+        <div className="content">
+          <span className="Message"></span>
+        </div>
+        {/* <div className="content rsvpButtonContainer">
           <button
             className="rsvpButton"
             onClick={() => {
@@ -49,7 +57,7 @@ const HomePage = (): React.JSX.Element => {
           >
             RSVP
           </button>
-        </div>
+        </div> */}
       </div>
       <Popup
         open={openModal}
