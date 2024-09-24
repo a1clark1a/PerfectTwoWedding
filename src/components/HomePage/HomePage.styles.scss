@@ -40,8 +40,9 @@
   font-family: "la-bohemienne", sans-serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 67px;
+  font-size: 120px; // 67px
   color: #fafafa;
+  text-shadow: 0 0 2px black;
 }
 
 .homePageDate {
@@ -51,12 +52,14 @@
   font-size: 17px;
   letter-spacing: 2px;
   color: #fafafa; //#1b1c1e;
+  text-align: center;
+  text-shadow: 0 0 2px black;
 }
 
 //screen width 401px up and height 901+
 .homePageContainer {
   display: grid;
-  grid-template-rows: 0fr 2fr 0.5fr 8fr;
+  //s grid-template-rows: 0fr 2fr 0.5fr 8fr;
   row-gap: 5px;
   align-content: center;
   justify-content: center;
@@ -120,22 +123,31 @@
 //screen width 401px up and height 901+
 @media screen and (max-height: 900px) {
   .homePageContainer {
-    grid-template-rows: 0fr 2fr 0.5fr 7fr;
+    //   grid-template-rows: 0fr 2fr 0.5fr 7fr;
   }
   .errorPopup-content {
     width: 70%;
+  }
+  .homePageTitleName {
+    font-size: 67px;
   }
 }
 
 @media screen and (max-height: 800px) {
   .homePageContainer {
-    grid-template-rows: 0fr 2fr 0.5fr 6fr;
+    //   grid-template-rows: 0fr 2fr 0.5fr 6fr;
+  }
+  .homePageTitleName {
+    font-size: 67px;
   }
 }
 
 @media screen and (max-height: 700px) {
   .homePageContainer {
-    grid-template-rows: 0fr 2fr 0.5fr 5fr;
+    //    grid-template-rows: 0fr 2fr 0.5fr 5fr;
+  }
+  .homePageTitleName {
+    font-size: 67px;
   }
 }
 
