@@ -120,6 +120,12 @@
   }
 }
 
+@media screen and (max-height: 1000px) {
+  .homePageTitleName {
+    font-size: 67px;
+  }
+}
+
 //screen width 401px up and height 901+
 @media screen and (max-height: 900px) {
   .homePageContainer {
