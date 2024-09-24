@@ -46,26 +46,26 @@ const Navigation = (): React.JSX.Element => {
                 LOVE STORY
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="#theDetails" onClick={() => setIsOpen(false)}>
                 THE DETAILS
               </a>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <a href="#travelGuide" onClick={() => setIsOpen(false)}>
                 TRAVEL GUIDE
               </a>
-            </li>
+            </li> */}
             <li>
               <a href="#memoryLane" onClick={() => setIsOpen(false)}>
                 MEMORY LANE
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="#FAQs" onClick={() => setIsOpen(false)}>
                 FAQs
               </a>
-            </li>
+            </li> */}
             <li>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a
@@ -87,18 +87,18 @@ const Navigation = (): React.JSX.Element => {
                 LOVE STORY
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="#theDetails">THE DETAILS</a>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <a href="#travelGuide">TRAVEL GUIDE</a>
-            </li>
+            </li> */}
             <li>
               <a href="#memoryLane">MEMORY LANE</a>
             </li>
-            <li>
+            {/* <li>
               <a href="#FAQs">FAQs</a>
-            </li>
+            </li> */}
             <li>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a onClick={() => setOpenModal(true)}>HONEYMOON GIFT</a>
