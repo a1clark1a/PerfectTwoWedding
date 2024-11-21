@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 //import { UserProvider } from "./context/user.context";
 import { VerifiedCodeProvider } from "./context/verifiedCode.context";
 import { ImagesProvider } from "./context/images.context";
+import { VideosProvider } from "./context/videos.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,7 +17,9 @@ root.render(
     <BrowserRouter>
       <VerifiedCodeProvider>
         <ImagesProvider>
-          <App />
+          <VideosProvider>
+            <App />
+          </VideosProvider>
         </ImagesProvider>
       </VerifiedCodeProvider>
     </BrowserRouter>
