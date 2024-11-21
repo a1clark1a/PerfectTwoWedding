@@ -50,6 +50,10 @@ export interface ImagesFolder {
   [folderName: string]: Images[];
 }
 
+export interface VideosObject {
+  [folderName: string]: any;
+}
+
 export type Images = {
   src: string;
   width: number;
@@ -60,3 +64,10 @@ export type Error = {
   title: string;
   message: string;
 };
+
+export enum VideoFilePath {
+  weddingHighlight = "videos/SaraandClarkHighlightVideo_comp.mp4",
+  loveStory = "videos/SaraandClarkLoveStory_comp.mp4",
+  weddingTeaser = "videos/SaraandClarkTeaser_comp.mp4",
+  ourJourney = "videos/SandC.mp4",
+}

@@ -27,6 +27,8 @@ import {
   orderBy,
 } from "firebase/firestore";
 
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 // Types
 import { Images, User, VerifiedCode } from "../types";
 
@@ -347,6 +349,20 @@ export const getImagesFromFirebase = (folderName: string) => {
       resolve(imageArray);
     } catch (error: any) {
       reject(new Error(`Failed to fetch images: ${error}`));
+    }
+  });
+};
+
+export const getVideosFromFirebaseStorage = (videoPath: string) => {
+  return new Promise<any>(async (resolve, reject) => {
+    const firebaseStorage = getStorage();
+    const videoRef = ref(firebaseStorage, videoPath);
+
+    try {
+      const videUrl = await getDownloadURL(videoRef);
+      resolve(videUrl);
+    } catch (error: any) {
+      reject(new Error(`Failed to fetch video: ${error}`));
     }
   });
 };
