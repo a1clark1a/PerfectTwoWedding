@@ -1,27 +1,34 @@
-import React, { useContext, useState } from "react";
-import Popup from "reactjs-popup";
+import React, { useContext, useEffect, useState } from "react";
+// import Popup from "reactjs-popup";
 
-import CountDownClock from "../CountDownClock/countDownClock.component";
-import RSVP from "../RSVP/rsvp.component";
-import InviteCodeForm from "../InviteCodeForm/InviteCodeForm.component";
+// import CountDownClock from "../CountDownClock/countDownClock.component";
+// import RSVP from "../RSVP/rsvp.component";
+// import InviteCodeForm from "../InviteCodeForm/InviteCodeForm.component";
 
-import { VerifiedCodeContext } from "../../context/verifiedCode.context";
+//import { VerifiedCodeContext } from "../../context/verifiedCode.context";
+
+import { VideosContext } from "../../context/videos.context";
+import { VideoFilePath } from "../../types";
+import Card from "../Card/Card.component";
 
 import "reactjs-popup/dist/index.css";
 import "./HomePage.styles.scss";
 
 import mobileBackgroundImage1 from "../../images/WeddingDay.jpg";
+import weddingHighlightImg from "../../images/weddingHighlight.jpg";
 
 const HomePage = (): React.JSX.Element => {
-  const [openModal, setOpenModal] = useState(false);
-  const { currentVerifiedCode } = useContext(VerifiedCodeContext);
+  // const [openModal, setOpenModal] = useState(false);
+  // const { currentVerifiedCode } = useContext(VerifiedCodeContext);
+  const { getVideos, videos, videosLoading, setVideosLoading } =
+    useContext(VideosContext);
 
-  const alreadySubmitted =
-    currentVerifiedCode && currentVerifiedCode.submit?.submitted;
+  // const alreadySubmitted =
+  //   currentVerifiedCode && currentVerifiedCode.submit?.submitted;
 
-  const closeRSVPForm = (): void => {
-    setOpenModal(false);
-  };
+  // const closeRSVPForm = (): void => {
+  //   setOpenModal(false);
+  // };
 
   return (
     <section
@@ -40,10 +47,31 @@ const HomePage = (): React.JSX.Element => {
           </span>
         </div>
         <div className="content">
-          <span className="homePageDate">
-            Please come back in a few weeks or wait for us to notify you when
-            Photos and Videos are uploaded.
-          </span>
+          <Card
+            label="Wedding Highlight"
+            img={weddingHighlightImg}
+            loading={videosLoading}
+            children={
+              <video
+                controlsList="nodownload"
+                controls
+                width="100%"
+                height="500px"
+                autoPlay
+              >
+                <source
+                  src={videos[VideoFilePath.weddingHighlight]}
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
+            }
+            callback={() => {
+              setVideosLoading(true);
+              getVideos(VideoFilePath.weddingHighlight);
+            }}
+            popupClassName="MemoryLanePopup"
+          />
         </div>
         <div className="content">
           <span className="Message"></span>
@@ -59,7 +87,7 @@ const HomePage = (): React.JSX.Element => {
           </button>
         </div> */}
       </div>
-      <Popup
+      {/* <Popup
         open={openModal}
         position="right center"
         closeOnDocumentClick={false}
@@ -167,7 +195,7 @@ const HomePage = (): React.JSX.Element => {
             </button>
           </div>
         </div>
-      </Popup>
+      </Popup> */}
     </section>
   );
 };

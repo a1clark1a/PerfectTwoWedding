@@ -40,54 +40,45 @@ const MemoryLane = (): React.JSX.Element => {
         <Card
           label="Our Journey"
           img={journeyImg}
+          loading={imagesLoading}
           children={
-            imagesLoading ? (
-              <div className="cardChildren">
-                <div>Loading...</div>
-                <span>
-                  Please wait while the images load. If this is your first time
-                  here this will take some time.
-                </span>
-              </div>
-            ) : (
-              <>
-                <div className="videoContainer">
-                  <YouTube
-                    videoId={"b2O2MwYVHkQ"}
-                    opts={{
-                      width: isMobile ? 320 : 700,
-                      height: 390,
-                      playerVars: {
-                        autoplay: 0,
-                        rel: 0,
-                      },
-                    }}
-                  />
-                </div>
-
-                <PhotoAlbum
-                  layout="masonry"
-                  columns={(containerWidth) => {
-                    if (containerWidth < 400) return 2;
-                    if (containerWidth < 800) return 4;
-                    return 5;
+            <>
+              <div className="videoContainer">
+                <YouTube
+                  videoId={"b2O2MwYVHkQ"}
+                  opts={{
+                    width: isMobile ? 320 : 700,
+                    height: 390,
+                    playerVars: {
+                      autoplay: 0,
+                      rel: 0,
+                    },
                   }}
-                  spacing={10}
-                  photos={images["OurJourney"]}
-                  onClick={({ index: current }) => setIndex(current)}
                 />
-                <Lightbox
-                  index={index}
-                  slides={images["OurJourney"]}
-                  open={index >= 0}
-                  close={() => setIndex(-1)}
-                />
-              </>
-            )
+              </div>
+
+              <PhotoAlbum
+                layout="masonry"
+                columns={(containerWidth) => {
+                  if (containerWidth < 400) return 2;
+                  if (containerWidth < 800) return 4;
+                  return 5;
+                }}
+                spacing={10}
+                photos={images["OurJourney"]}
+                onClick={({ index: current }) => setIndex(current)}
+              />
+              <Lightbox
+                index={index}
+                slides={images["OurJourney"]}
+                open={index >= 0}
+                close={() => setIndex(-1)}
+              />
+            </>
           }
-          callback={async () => {
+          callback={() => {
             setImagesLoading(true);
-            await getImages("OurJourney");
+            getImages("OurJourney");
           }}
           popupClassName="MemoryLanePopup"
         />
@@ -95,40 +86,31 @@ const MemoryLane = (): React.JSX.Element => {
         <Card
           label="Engagement"
           img={engagementImg}
+          loading={imagesLoading}
           children={
-            imagesLoading ? (
-              <div className="cardChildren">
-                <div>Loading...</div>
-                <span>
-                  Please wait while the images load. These are some high quality
-                  images your Iphone can't keep up.
-                </span>
-              </div>
-            ) : (
-              <>
-                <PhotoAlbum
-                  layout="columns"
-                  columns={(containerWidth) => {
-                    if (containerWidth < 400) return 2;
-                    if (containerWidth < 800) return 4;
-                    return 5;
-                  }}
-                  spacing={10}
-                  photos={images["Engagement"]}
-                  onClick={({ index: current }) => setIndex(current)}
-                />
-                <Lightbox
-                  index={index}
-                  slides={images["Engagement"]}
-                  open={index >= 0}
-                  close={() => setIndex(-1)}
-                />
-              </>
-            )
+            <>
+              <PhotoAlbum
+                layout="columns"
+                columns={(containerWidth) => {
+                  if (containerWidth < 400) return 2;
+                  if (containerWidth < 800) return 4;
+                  return 5;
+                }}
+                spacing={10}
+                photos={images["Engagement"]}
+                onClick={({ index: current }) => setIndex(current)}
+              />
+              <Lightbox
+                index={index}
+                slides={images["Engagement"]}
+                open={index >= 0}
+                close={() => setIndex(-1)}
+              />
+            </>
           }
-          callback={async () => {
+          callback={() => {
             setImagesLoading(true);
-            await getImages("Engagement");
+            getImages("Engagement");
           }}
           popupClassName="MemoryLanePopup"
         />
@@ -136,40 +118,31 @@ const MemoryLane = (): React.JSX.Element => {
         <Card
           label="Memories with you"
           img={memoriesWithYouImg}
+          loading={imagesLoading}
           children={
-            imagesLoading ? (
-              <div className="cardChildren">
-                <div>Loading...</div>
-                <span>
-                  Please wait while the images load. We've made a lot of
-                  memories with you.
-                </span>
-              </div>
-            ) : (
-              <>
-                <PhotoAlbum
-                  layout="masonry"
-                  columns={(containerWidth) => {
-                    if (containerWidth < 400) return 2;
-                    if (containerWidth < 800) return 4;
-                    return 5;
-                  }}
-                  spacing={10}
-                  photos={images["MemoriesWithYou"]}
-                  onClick={({ index: current }) => setIndex(current)}
-                />
-                <Lightbox
-                  index={index}
-                  slides={images["MemoriesWithYou"]}
-                  open={index >= 0}
-                  close={() => setIndex(-1)}
-                />
-              </>
-            )
+            <>
+              <PhotoAlbum
+                layout="masonry"
+                columns={(containerWidth) => {
+                  if (containerWidth < 400) return 2;
+                  if (containerWidth < 800) return 4;
+                  return 5;
+                }}
+                spacing={10}
+                photos={images["MemoriesWithYou"]}
+                onClick={({ index: current }) => setIndex(current)}
+              />
+              <Lightbox
+                index={index}
+                slides={images["MemoriesWithYou"]}
+                open={index >= 0}
+                close={() => setIndex(-1)}
+              />
+            </>
           }
-          callback={async () => {
+          callback={() => {
             setImagesLoading(true);
-            await getImages("MemoriesWithYou");
+            getImages("MemoriesWithYou");
           }}
           popupClassName="MemoryLanePopup"
         />
