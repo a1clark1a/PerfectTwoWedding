@@ -3,6 +3,7 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 
 import "./Card.styles.scss";
+import Loading from "../Loading/Loading.component";
 
 const Card = ({
   label,
@@ -10,12 +11,14 @@ const Card = ({
   children,
   callback,
   popupClassName,
+  loading = false,
 }: {
   label: string;
   img?: string;
   children: React.JSX.Element | any;
   callback?: () => void;
   popupClassName?: string;
+  loading?: boolean;
 }): React.JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
   const closeRSVPForm = (): void => {
@@ -40,20 +43,24 @@ const Card = ({
       >
         {label.toUpperCase()}
       </button>
-      <Popup
-        open={openModal}
-        position="right center"
-        closeOnDocumentClick={false}
-        onClose={closeRSVPForm}
-        className={`cardPopup ${popupClassName}`}
-      >
-        {children}
-        <div className="modal">
-          <button className="close" onClick={closeRSVPForm}>
-            &times;
-          </button>
-        </div>
-      </Popup>
+      {loading ? (
+        <Loading loading={loading} />
+      ) : (
+        <Popup
+          open={openModal}
+          position="right center"
+          closeOnDocumentClick={false}
+          onClose={closeRSVPForm}
+          className={`cardPopup ${popupClassName}`}
+        >
+          {children}
+          <div className="modal">
+            <button className="close" onClick={closeRSVPForm}>
+              &times;
+            </button>
+          </div>
+        </Popup>
+      )}
     </div>
   );
 };

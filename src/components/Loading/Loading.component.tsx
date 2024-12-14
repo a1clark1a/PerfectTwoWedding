@@ -13,6 +13,7 @@ const Loading = ({ loading }: { loading: boolean }): React.JSX.Element => {
     <>
       <Popup
         open={loading}
+        position="right center"
         closeOnDocumentClick={false}
         className="loadingPopup"
       >
