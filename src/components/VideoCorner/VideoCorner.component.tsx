@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import YouTube from "react-youtube";
+import PhotoAlbum from "react-photo-album";
+import Lightbox from "yet-another-react-lightbox";
 
 import Card from "../Card/Card.component";
 
 import { VideosContext } from "../../context/videos.context";
+import { ImagesContext } from "../../context/images.context";
 import { VideoFilePath } from "../../types";
 
 import "./videoCorner.styles.scss";
@@ -11,11 +14,15 @@ import "./videoCorner.styles.scss";
 import weddingTeaser from "../../images/weddingTeaser.jpg";
 import weddingPhotos from "../../images/weddingPhotos.jpg";
 import loveStory from "../../images/loveStory.jpg";
+import photobooth from "../../images/photobooth.jpg";
 
 const VideoCorner = (): React.JSX.Element => {
+  const [index, setIndex] = useState<number>(-1);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
   const { getVideos, videos, setVideosLoading, videosLoading } =
     useContext(VideosContext);
+  const { images, getImages, imagesLoading, setImagesLoading } =
+    useContext(ImagesContext);
 
   useEffect(() => {
     const handleResize = () => {
@@ -64,13 +71,63 @@ const VideoCorner = (): React.JSX.Element => {
         <Card
           label="Wedding Photos"
           img={weddingPhotos}
-          loading={videosLoading}
+          loading={imagesLoading}
           children={
-            <div style={{ textAlign: "center" }}>
-              Images are coming... stay tuned.
-            </div>
+            <>
+              <PhotoAlbum
+                layout="masonry"
+                columns={(containerWidth) => {
+                  if (containerWidth < 400) return 2;
+                  if (containerWidth < 800) return 4;
+                  return 5;
+                }}
+                spacing={10}
+                photos={images["Wedding"]}
+                onClick={({ index: current }) => setIndex(current)}
+              />
+              <Lightbox
+                index={index}
+                slides={images["Wedding"]}
+                open={index >= 0}
+                close={() => setIndex(-1)}
+              />
+            </>
           }
-          callback={() => {}}
+          callback={() => {
+            setImagesLoading(true);
+            getImages("Wedding");
+          }}
+          popupClassName="MemoryLanePopup"
+        />
+        <Card
+          label="Photo Booth"
+          img={photobooth}
+          loading={imagesLoading}
+          children={
+            <>
+              <PhotoAlbum
+                layout="masonry"
+                columns={(containerWidth) => {
+                  if (containerWidth < 400) return 2;
+                  if (containerWidth < 800) return 4;
+                  return 5;
+                }}
+                spacing={10}
+                photos={images["PhotoBooth"]}
+                onClick={({ index: current }) => setIndex(current)}
+              />
+              <Lightbox
+                index={index}
+                slides={images["PhotoBooth"]}
+                open={index >= 0}
+                close={() => setIndex(-1)}
+              />
+            </>
+          }
+          callback={() => {
+            setImagesLoading(true);
+            getImages("PhotoBooth");
+          }}
           popupClassName="MemoryLanePopup"
         />
 
