@@ -120,7 +120,7 @@
   }
 }
 
-@media screen and (max-height: 1000px) {
+@media screen and (max-width: 800px) {
   .homePageTitleName {
     font-size: 67px;
   }
@@ -134,9 +134,6 @@
   .errorPopup-content {
     width: 70%;
   }
-  .homePageTitleName {
-    font-size: 67px;
-  }
 
   .homePageDate {
     font-size: 17px;
@@ -147,17 +144,11 @@
   .homePageContainer {
     //   grid-template-rows: 0fr 2fr 0.5fr 6fr;
   }
-  .homePageTitleName {
-    font-size: 67px;
-  }
 }
 
 @media screen and (max-height: 700px) {
   .homePageContainer {
     //    grid-template-rows: 0fr 2fr 0.5fr 5fr;
-  }
-  .homePageTitleName {
-    font-size: 67px;
   }
 }
 

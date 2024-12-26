@@ -41,12 +41,6 @@ const HomePage = (): React.JSX.Element => {
           <span className="homePageTitleName">Sara & Clark</span>
         </div>
         <div className="content">
-          <span className="homePageDate">
-            Thank you for sharing this wonderful moment with us! We can't wait
-            to share the pictures and videos!
-          </span>
-        </div>
-        <div className="content">
           <Card
             label="Wedding Highlight"
             img={weddingHighlightImg}
