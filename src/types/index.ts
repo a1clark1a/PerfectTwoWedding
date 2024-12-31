@@ -55,6 +55,7 @@ export interface VideosObject {
 }
 
 export type Images = {
+  fileName: string;
   src: string;
   width: number;
   height: number;
