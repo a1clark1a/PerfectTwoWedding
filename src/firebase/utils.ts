@@ -309,6 +309,7 @@ export const getImagesFromFirebase = (folderName: string) => {
       imagesSnapshot.forEach((doc) => {
         const image = doc.data();
         imageArray.push({
+          fileName: image.fileName,
           src: image.url,
           width: image.width,
           height: image.height,

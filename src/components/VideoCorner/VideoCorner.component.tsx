@@ -37,6 +37,8 @@ const VideoCorner = (): React.JSX.Element => {
     };
   }, []);
 
+  const weddingImagesToSort = images["Wedding"];
+
   return (
     <section id="TheWedding" className="videoCornerSection">
       <h2 className="sectionTitles">The Wedding</h2>
@@ -82,7 +84,26 @@ const VideoCorner = (): React.JSX.Element => {
                   return 5;
                 }}
                 spacing={10}
-                photos={images["Wedding"]}
+                photos={weddingImagesToSort?.sort((a, b) => {
+                  const getNumber = (fileName: string) => {
+                    // Extract the numeric part of the file name using a regular expression
+                    const match = fileName.match(/SC_(\d+)\.jpg/i);
+                    return match ? parseInt(match[1], 10) : null; // Return null for non-matching files
+                  };
+
+                  const numA = getNumber(a.fileName);
+                  const numB = getNumber(b.fileName);
+
+                  if (numA === null && numB === null) {
+                    return 0; // Both don't match, maintain original order
+                  } else if (numA === null) {
+                    return 1; // Place non-matching files after matching files
+                  } else if (numB === null) {
+                    return -1; // Place non-matching files before matching files
+                  } else {
+                    return numA - numB; // Compare numeric parts for matching files
+                  }
+                })}
                 onClick={({ index: current }) => setIndex(current)}
               />
               <Lightbox
